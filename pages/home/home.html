@@ -1,0 +1,23 @@
+<!-- <ion-header>
+	<ion-navbar> -->
+		<!-- <button ion-button menuToggle>
+			<ion-icon name="menu"></ion-icon>
+		</button> -->
+		<!-- <ion-title>Home</ion-title>
+	</ion-navbar>
+</ion-header> -->
+<ion-content>
+	<ion-card>
+		<img src="../../assets/img/logo.png"/>
+	</ion-card>
+	<ion-grid>
+		<ion-row *ngFor="let doubles of getDoubles()">
+			<ion-col *ngFor="let item of doubles" (click)="openPage(item)">
+				<ion-item style="text-align:center !important;">
+					<ion-icon [name]='item.iconName' color="primary" style="font-size:24px;"></ion-icon><br>
+					<label>{{item.title}}</label>
+				</ion-item>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+</ion-content>

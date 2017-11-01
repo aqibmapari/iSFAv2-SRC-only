@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Settings</ion-title>
+  </ion-navbar>
+
+  <ion-toolbar no-border-top>
+    <!-- <ion-segment [(ngModel)]="segmentModel"> -->
+		<tabs-directive [tabmodel]="tabs" (segmentChange)="segmentValueChange($event);" [tabselected]="segmentModel"></tabs-directive>
+	<!-- </ion-segment> -->
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+<div [ngSwitch]="segmentModel">
+	<settings-about *ngSwitchCase="'about'"></settings-about>
+    <settings-authorizations *ngSwitchCase="'authorizations'"></settings-authorizations>
+    <settings-default *ngSwitchCase="'default'"></settings-default>
+    <settings-backend *ngSwitchCase="'backend'"></settings-backend>
+</div>
+</ion-content>

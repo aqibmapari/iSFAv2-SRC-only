@@ -1,0 +1,10 @@
+<!-- <ion-tabs>
+	<ion-tab *ngFor="let tab of tabs" [root]="tab.root" [tabTitle]="tab.title" [tabIcon]="tab.icon"></ion-tab>
+</ion-tabs> -->
+<!-- <ion-scroll scrollX="true" style="width:100vw;" > -->
+<ion-segment [(ngModel)]="segmentModel">
+<ion-segment-button *ngFor="let tab of tabs" [value]="tab.value" (click)="segmentClicked(tab.value)">
+	{{tab.title}}
+</ion-segment-button>
+</ion-segment>
+<!-- </ion-scroll> -->
