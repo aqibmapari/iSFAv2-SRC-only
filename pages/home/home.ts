@@ -61,9 +61,9 @@ export class HomePage{
 		// Reset the content nav to have just this page//
 		// we wouldn't want the back button to show in this scenario
 		//this.nav.setRoot(page.component);
-		if(page.title == "Sync"){
-            let modal = this.modalCtrl.create(page.component);
-            modal.present();
+		if(page.id == "sync" || page.id == "changepassword"){
+			let modal = this.modalCtrl.create(page.component);
+			modal.present();
 		}
 		else if(page.title == "Sign Off"){
 			this.nav.setRoot(page.component);

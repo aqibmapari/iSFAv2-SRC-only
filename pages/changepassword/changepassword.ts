@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, Platform, NavParams,ViewController } from 'ionic-angular';
 
 /**
  * Generated class for the ChangepasswordPage page.
@@ -14,12 +14,26 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'changepassword.html',
 })
 export class ChangePasswordPage {
+  model: {oldpassword?: string, newpassword?: string, confirmpassword?: string} = {};
+  submitted = false;
+  constructor(
+    public platform: Platform,
+    public params: NavParams,
+    public viewCtrl: ViewController
+  ) {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ChangepasswordPage');
+  onSubmit(form) {
+    this.submitted = true;
+    console.log((form));
+    if (form.valid) {
+      let oldpassword = this.model.oldpassword;
+      let newpassword = this.model.newpassword;
+      let confirmpassword = this.model.confirmpassword;
+    }
+  }
+  dismiss() {
+      this.viewCtrl.dismiss();
   }
 
 }
