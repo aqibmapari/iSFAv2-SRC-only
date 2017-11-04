@@ -1,0 +1,106 @@
+<ion-item-divider sticky>
+{{selectedCustomer.name1}}
+</ion-item-divider>
+<ion-list no-padding>
+
+
+  <ion-item no-padding *ngFor="let custactivity of custactivities" (click)="toggleDetails(custactivity)">
+    <ion-row>
+      <ion-col col-11><h4>{{custactivity.title}}</h4></ion-col>
+      <ion-col col-1><ion-icon color="primary" item-right [name]="custactivity.icon"></ion-icon></ion-col>
+    </ion-row>
+    <ion-list *ngIf="custactivity.showDetails" no-padding no-margin>
+      <ion-list no-padding no-margin *ngFor="let visit of custactivity.visits">
+        <ion-item-divider no-padding sticky *ngIf="visit.status==='Pending'">{{visit.visitstarttime}} - {{visit.visitendtime}} Visit</ion-item-divider>
+        <ion-item-divider no-padding sticky *ngIf="visit.status!=='Pending'">{{visit.checkintime}} - {{visit.checkouttime}} Visit</ion-item-divider>
+        <ion-item no-padding *ngFor="let objective of visit.objectives; let i = index">
+          <ion-row>
+            <ion-col col-6><h4>Objective{{i+1}}</h4></ion-col>
+            <ion-col col-6><h4>{{objective.text}}</h4></ion-col>
+          </ion-row>
+        </ion-item>
+        <ion-item no-padding>
+          <ion-row>
+            <ion-col col-6><h4>Order Amount</h4></ion-col>
+            <ion-col col-6><h4>{{visit.orderamt}}</h4></ion-col>
+          </ion-row>
+        </ion-item>
+        <ion-item no-padding>
+          <ion-row>
+            <ion-col col-6><h4>Collection Amount</h4></ion-col>
+            <ion-col col-6><h4>{{visit.collectionamt}}</h4></ion-col>
+          </ion-row>
+        </ion-item>
+        <ion-item no-padding>
+          <ion-row>
+            <ion-col col-6><h4>Check Out Comments</h4></ion-col>
+            <ion-col col-6><h4>{{visit.comments}}</h4></ion-col>
+          </ion-row>
+        </ion-item>
+        <ion-item no-padding>
+          <ion-row>
+            <ion-col col-6><h4>Status</h4></ion-col>
+            <ion-col col-6><h4>{{visit.status}}</h4></ion-col>
+          </ion-row>
+        </ion-item>
+      </ion-list>
+
+      <ion-list no-padding no-margin *ngFor="let order of custactivity.orders">
+        <ion-item-divider no-padding sticky>{{order.time}} Order</ion-item-divider>
+        <ion-item no-padding>
+          <ion-row>
+            <ion-col col-6><h4>Order No</h4></ion-col>
+            <ion-col col-6><h4>{{order.no}}</h4></ion-col>
+          </ion-row>
+        </ion-item>
+        <ion-item no-padding>
+          <ion-row>
+            <ion-col col-6><h4>Reference</h4></ion-col>
+            <ion-col col-6><h4>{{order.reference}}</h4></ion-col>
+          </ion-row>
+        </ion-item>
+        <ion-item no-padding>
+          <ion-row>
+            <ion-col col-6><h4>Delivery Date</h4></ion-col>
+            <ion-col col-6><h4>{{order.deliverydate}}</h4></ion-col>
+          </ion-row>
+        </ion-item>
+        <ion-item no-padding>
+          <ion-row>
+            <ion-col col-6><h4>Status</h4></ion-col>
+            <ion-col col-6><h4>{{order.status}}</h4></ion-col>
+          </ion-row>
+        </ion-item>
+      </ion-list>
+
+      <ion-list no-padding no-margin *ngFor="let collection of custactivity.collections">
+        <ion-item-divider no-padding sticky>{{collection.time}} Payment</ion-item-divider>
+        <ion-item no-padding>
+          <ion-row>
+            <ion-col col-6><h4>Invoice No</h4></ion-col>
+            <ion-col col-6><h4>{{collection.invno}}</h4></ion-col>
+          </ion-row>
+        </ion-item>
+        <ion-item no-padding>
+          <ion-row>
+            <ion-col col-6><h4>Amount Recvd</h4></ion-col>
+            <ion-col col-6><h4>{{collection.amtrcvd}}</h4></ion-col>
+          </ion-row>
+        </ion-item>
+        <ion-item no-padding>
+          <ion-row>
+            <ion-col col-6><h4>Balance</h4></ion-col>
+            <ion-col col-6><h4>{{collection.balance}}</h4></ion-col>
+          </ion-row>
+        </ion-item>
+        <ion-item no-padding>
+          <ion-row>
+            <ion-col col-6><h4>Due Date</h4></ion-col>
+            <ion-col col-6><h4>{{collection.duedate}}</h4></ion-col>
+          </ion-row>
+        </ion-item>
+      </ion-list>
+    </ion-list>
+  </ion-item>
+  <!-- <ion-item *ngIf="data[0].showDetails" no-padding>{{data[0].title}}</ion-item> -->
+</ion-list>

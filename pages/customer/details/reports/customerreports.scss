@@ -1,0 +1,30 @@
+.ios, .md {
+
+    customer-reports {
+
+        .scroll-content {
+            background-color: map-get($colors, light);
+        }
+
+        ion-card-header {
+            font-weight: bold;
+        }
+        .item-ios.item-block .item-inner {
+          padding-right: 1px;
+        }
+
+        .item-md.item-block .item-inner {
+          padding-right: 1px;
+        }
+
+        .label-ios {
+          margin: 0;
+        }
+
+        .label-md {
+          margin: 0;
+        }
+
+    }
+
+}

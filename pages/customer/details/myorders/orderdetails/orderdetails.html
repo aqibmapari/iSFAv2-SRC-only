@@ -1,0 +1,183 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Order Details
+    </ion-title>
+    <ion-buttons start>
+      <button ion-button (click)="dismiss()">
+        <span ion-text color="primary" showWhen="ios">Cancel</span>
+        <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list no-padding>
+    <ion-item (click)="toggleDetails(data[0])" no-padding>
+      <ion-icon color="primary" item-right [name]="data[0].icon"></ion-icon>
+      <h2 padding-left>{{data[0].title}}</h2>
+    </ion-item>
+    <!-- <ion-item *ngIf="data[0].showDetails" no-padding>{{data[0].title}}</ion-item> -->
+    <ion-list *ngIf="data[0].showDetails" no-padding no-margin>
+
+      <ion-item>
+        <ion-row>
+          <ion-col col-6>
+            <h3>Sales Area</h3></ion-col>
+          <ion-col col-6>
+            <h3>{{order.salesorganisation}}</h3></ion-col>
+        </ion-row>
+      </ion-item>
+      <ion-item>
+        <ion-row>
+          <ion-col col-6>
+            <h3></h3></ion-col>
+          <ion-col col-6>
+            <h3>{{order.distchannel}}</h3></ion-col>
+        </ion-row>
+      </ion-item>
+      <ion-item>
+        <ion-row>
+          <ion-col col-6>
+            <h3></h3></ion-col>
+          <ion-col col-6>
+            <h3>{{order.division}}</h3></ion-col>
+        </ion-row>
+      </ion-item>
+      <ion-item>
+        <ion-row>
+          <ion-col col-6>
+            <h3>Order Type</h3></ion-col>
+          <ion-col col-6>
+            <h3>{{order.ordertype}}</h3></ion-col>
+        </ion-row>
+      </ion-item>
+      <ion-item>
+        <ion-row>
+          <ion-col col-6>
+            <h3>Order No.</h3></ion-col>
+          <ion-col col-6>
+            <h3>{{order.no}}</h3></ion-col>
+        </ion-row>
+      </ion-item>
+      <ion-item>
+        <ion-row>
+          <ion-col col-6>
+            <h3>Status</h3></ion-col>
+          <ion-col col-6>
+            <h3>{{order.status}}</h3></ion-col>
+        </ion-row>
+      </ion-item>
+    </ion-list>
+
+    <ion-item (click)="toggleDetails(data[1])" no-padding>
+      <ion-icon color="primary" item-right [name]="data[1].icon"></ion-icon>
+      <h2 padding-left>{{data[1].title}}</h2>
+    </ion-item>
+    <ion-list *ngIf="data[1].showDetails" no-padding no-margin>
+
+      <ion-item>
+        <ion-row>
+          <ion-col col-6>
+            <h3>Customer</h3></ion-col>
+          <ion-col col-6>
+            <h3>{{order.customer}}</h3></ion-col>
+        </ion-row>
+      </ion-item>
+      <ion-item>
+        <ion-row>
+          <ion-col col-6>
+            <h3>Ship To Party</h3></ion-col>
+          <ion-col col-6>
+            <h3>{{order.shipto}}</h3></ion-col>
+        </ion-row>
+      </ion-item>
+      <ion-item>
+        <ion-row>
+          <ion-col col-6>
+            <h3>Reference</h3></ion-col>
+          <ion-col col-6>
+            <h3>{{order.reference}}</h3></ion-col>
+        </ion-row>
+      </ion-item>
+      <ion-item>
+        <ion-row>
+          <ion-col col-6>
+            <h3>Expected Delivery Date</h3></ion-col>
+          <ion-col col-6>
+            <h3>{{order.deldate}}</h3></ion-col>
+        </ion-row>
+      </ion-item>
+    </ion-list>
+
+    <ion-item (click)="toggleDetails(data[2])" no-padding>
+      <ion-icon color="primary" item-right [name]="data[2].icon"></ion-icon>
+      <h2 padding-left>{{data[2].title}}</h2>
+    </ion-item>
+    <ion-list *ngIf="data[2].showDetails" no-padding no-margin>
+      <ion-item no-margin no-padding>
+        <ion-grid>
+          <ion-row><ion-col><h3>Description</h3></ion-col></ion-row>
+          <ion-row><ion-col><h4>Article / List Price / SP</h4></ion-col></ion-row>
+          <ion-row>
+            <ion-col col-6><h4>Previously Ordered Qty</h4></ion-col>
+
+            <ion-col col-1><h4>QTY</h4></ion-col>
+            <ion-col col-1><h4>UoM</h4></ion-col>
+            <ion-col col-3><h4>Order Value</h4></ion-col>
+            <ion-col col-1><h4>FOC</h4></ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+
+      <ion-item no-margin no-padding *ngFor="let orderdetail of order.orderdetails">
+        <ion-grid>
+          <ion-row><ion-col><h3>{{orderdetail.maktx}}</h3></ion-col></ion-row>
+          <ion-row><ion-col><h4>{{orderdetail.matnr}} / {{orderdetail.unitprice}} / {{orderdetail.specialprice}}</h4></ion-col></ion-row>
+          <ion-row>
+            <ion-col col-1 class="suggestedCol">
+              <h4>{{orderdetail.sqty5}}</h4>
+              <!-- <ion-input no-margin no-padding type="text" [(ngModel)]="orderdetail.sqty5"></ion-input> -->
+            </ion-col>
+            <ion-col col-1 class="suggestedCol">
+              <h4>{{orderdetail.sqty4}}</h4>
+              <!-- <ion-input no-margin no-padding type="text" [(ngModel)]="orderdetail.sqty4"></ion-input> -->
+            </ion-col>
+            <ion-col col-1 class="suggestedCol">
+              <h4>{{orderdetail.sqty3}}</h4>
+              <!-- <ion-input no-margin no-padding type="text" [(ngModel)]="orderdetail.sqty3"></ion-input> -->
+            </ion-col>
+            <ion-col col-1 class="suggestedCol">
+              <h4>{{orderdetail.sqty2}}</h4>
+              <!-- <ion-input no-margin no-padding type="text" [(ngModel)]="orderdetail.sqty2"></ion-input> -->
+            </ion-col>
+            <ion-col col-1 class="suggestedCol">
+              <h4>{{orderdetail.sqty1}}</h4>
+              <!-- <ion-input no-margin no-padding type="text" [(ngModel)]="orderdetail.sqty1"></ion-input> -->
+            </ion-col>
+            <ion-col col-1 class="suggestedCol">
+              <h4>{{orderdetail.sqty0}}</h4>
+              <!-- <ion-input no-margin no-padding type="text" [(ngModel)]="orderdetail.sqty0"></ion-input> -->
+            </ion-col>
+
+            <ion-col col-1><h4>{{orderdetail.qty}}</h4></ion-col>
+            <ion-col col-1><h4>{{orderdetail.uom}}</h4></ion-col>
+            <ion-col col-3><h4>{{orderdetail.ordervalue}}</h4></ion-col>
+            <ion-col col-1><h4>{{orderdetail.foc}}</h4></ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+
+      <ion-item no-margin no-padding>
+        <ion-grid>
+          <ion-row>
+          <ion-col col-6><h4>Available Credit: {{order.avlblcredit}}</h4></ion-col>
+          <ion-col col-6><h4>Total Amount: {{order.totalamount}}</h4></ion-col>
+        </ion-row>
+      </ion-grid>
+      </ion-item>
+    </ion-list>
+
+  </ion-list>
+</ion-content>

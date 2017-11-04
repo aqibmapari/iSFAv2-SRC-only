@@ -1,0 +1,37 @@
+<ion-item-divider no-margin sticky>
+{{selectedCustomer.name1}}
+</ion-item-divider>
+<ion-list no-margin *ngFor="let group of groupedObjects">
+  <ion-item-divider light>{{group.letter}}</ion-item-divider>
+<ion-item-sliding *ngFor="let obj of group.object">
+  <ion-item (click)="editContact(obj)">
+    <ion-avatar item-left>
+      <img src="assets/img/logo.png">
+    </ion-avatar>
+    <h2>{{obj.name}}</h2>
+    <p>{{obj.designation}}</p>
+  </ion-item>
+  <ion-item-options side="right">
+      <button ion-button color="danger" (click)="deleteContact(obj.email)">
+        <ion-icon name="trash"></ion-icon>
+        Delete
+      </button>
+      <button ion-button color="primary" (click)="emailContact(obj.email)">
+        <ion-icon name="mail"></ion-icon>
+        Email
+      </button>
+      <button ion-button color="secondary" (click)="callContact(obj.mobile)">
+        <ion-icon name="call"></ion-icon>
+        Call
+      </button>
+    </ion-item-options>
+</ion-item-sliding>
+</ion-list>
+
+<ion-fab right bottom>
+    <button ion-fab color="primary"><ion-icon name="add"></ion-icon></button>
+    <ion-fab-list side="top">
+      <button (click)="pickContact()" ion-fab><ion-icon name="book"></ion-icon></button>
+      <button (click)="addContact()" ion-fab><ion-icon name="create"></ion-icon></button>
+    </ion-fab-list>
+  </ion-fab>

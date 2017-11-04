@@ -1,0 +1,105 @@
+<ion-item-divider sticky>
+  {{selectedCustomer.name1}}
+</ion-item-divider>
+<ion-list no-margin>
+
+  <ion-item>
+    <ion-row>
+      <ion-col col-6>
+        <h2>Credit Limit</h2></ion-col>
+      <ion-col col-4>
+        <h3>{{creditModel.creditlimit}}</h3></ion-col>
+      <ion-col col-2></ion-col>
+    </ion-row>
+  </ion-item>
+  <ion-item>
+    <ion-row>
+      <ion-col col-6>
+        <h2>Limit Used</h2></ion-col>
+      <ion-col col-4>
+        <h3>{{creditModel.limitused}}</h3></ion-col>
+      <ion-col col-2></ion-col>
+    </ion-row>
+  </ion-item>
+  <ion-item>
+    <ion-row>
+      <ion-col col-6>
+        <h2>Receivable</h2></ion-col>
+      <ion-col col-4>
+        <h3>{{creditModel.receivable}}</h3></ion-col>
+      <ion-col col-2></ion-col>
+    </ion-row>
+  </ion-item>
+  <ion-item>
+    <ion-row>
+      <ion-col col-6>
+        <h2>Available Credit</h2></ion-col>
+      <ion-col col-4>
+        <h3>{{creditModel.avlblcredit}}</h3></ion-col>
+      <ion-col col-2></ion-col>
+    </ion-row>
+  </ion-item>
+  <ion-item>
+    <ion-row>
+      <ion-col col-6>
+        <h2>Total Overdue</h2></ion-col>
+      <ion-col col-4>
+        <h3 ion-text color="danger">{{creditModel.totoverdue}}</h3></ion-col>
+      <ion-col col-2><ion-icon name="square" color="danger"></ion-icon></ion-col>
+    </ion-row>
+  </ion-item>
+</ion-list>
+
+<ion-grid>
+  <ion-row>
+    <ion-col col-3>Doc No</ion-col>
+      <ion-col col-3>Doc Type</ion-col>
+        <ion-col col-3>Doc Date</ion-col>
+          <ion-col col-3>Amount</ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col col-3><ion-input type="text" placeholder="Document No" [(ngModel)]="creditModel.docno"></ion-input></ion-col>
+      <ion-col col-3><ion-select [(ngModel)]="creditModel.doctype">
+      <ion-option value="Cheque">Cheque</ion-option>
+      <ion-option value="Cash">Cash</ion-option>
+      <ion-option value="EFT">EFT</ion-option>
+      <ion-option value="DD">DD</ion-option>
+    </ion-select></ion-col>
+        <ion-col col-3><ion-datetime displayFormat="DD.MM.YYYY" [(ngModel)]="creditModel.docdate"></ion-datetime></ion-col>
+          <ion-col col-3><ion-input type="text" placeholder="Amount" [(ngModel)]="creditModel.docamt"></ion-input></ion-col>
+  </ion-row>
+</ion-grid>
+
+<table border="1">
+	    <thead>
+        <tr>
+            <th width="19%">Invoice No</th>
+            <!-- <th width="17%" class="credit-row">Invoice Date</th> -->
+            <th width="15%" class="credit-row">Invoice Amt</th>
+            <th width="14%">Due Date</th>
+            <th width="13%">Amount To Rcv</th>
+            <th width="14%">Balance</th>
+            <th width="8%">&nbsp;</th>
+        </tr>
+    </thead>
+    <tbody id="data-credit">
+      <tr *ngFor="let invoice of creditModel.invoices">
+        <td style="border-bottom: 1px solid #000000;" height="20" align="center" valign="middle" ion-text color="{{invoice.color}}" (click)="showInvDetails(invoice)">{{invoice.no}}</td>
+        <!-- <td style="border-bottom: 1px solid #000000;" height="20" align="center" valign="middle">01.06.2017</td> -->
+        <td style="border-bottom: 1px solid #000000;" height="20" align="center" valign="middle" ion-text color="{{invoice.color}}">{{invoice.amt}}</td>
+        <td style="border-bottom: 1px solid #000000;" height="20" align="center" valign="middle" ion-text color="{{invoice.color}}">{{invoice.date}}</td>
+        <td style="border-bottom: 1px solid #000000;" height="20" align="center" valign="middle" ion-text color="{{invoice.color}}"><ion-input type="number" placeholder="Amt" [(ngModel)]="invoice.torcv"></ion-input></td>
+        <td style="border-bottom: 1px solid #000000;" height="20" align="center" valign="middle" ion-text color="{{invoice.color}}">{{invoice.balance}}</td>
+        <td style="border-bottom: 1px solid #000000;" height="20" align="center" valign="middle"><ion-checkbox color="{{invoice.color}}" checked="false"></ion-checkbox></td>
+      </tr>
+      <tr>
+        <td style="border-bottom: 1px solid #000000;" height="20" align="center" valign="middle" ion-text color="{{creditModel.invoiceTotal.color}}">{{creditModel.invoiceTotal.no}}</td>
+        <!-- <td style="border-bottom: 1px solid #000000;" height="20" align="center" valign="middle">01.06.2017</td> -->
+        <td style="border-bottom: 1px solid #000000;" height="20" align="center" valign="middle" ion-text bold color="{{creditModel.invoiceTotal.color}}"><b>{{creditModel.invoiceTotal.amt}}</b></td>
+        <td style="border-bottom: 1px solid #000000;" height="20" align="center" valign="middle" ion-text color="{{creditModel.invoiceTotal.color}}">{{creditModel.invoiceTotal.date}}</td>
+        <td style="border-bottom: 1px solid #000000;" height="20" align="center" valign="middle" ion-text color="{{creditModel.invoiceTotal.color}}"><b>{{creditModel.invoiceTotal.torcv}}</b></td>
+        <td style="border-bottom: 1px solid #000000;" height="20" align="center" valign="middle" ion-text color="{{creditModel.invoiceTotal.color}}"><b>{{creditModel.invoiceTotal.balance}}</b></td>
+        <td style="border-bottom: 1px solid #000000;" height="20" align="center" valign="middle">&nbsp;</td>
+      </tr>
+    </tbody>
+</table>

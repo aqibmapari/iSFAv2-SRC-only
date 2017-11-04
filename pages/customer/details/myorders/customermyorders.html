@@ -1,0 +1,17 @@
+<ion-item-divider sticky>
+  {{selectedCustomer.name1}}
+</ion-item-divider>
+<ion-grid>
+  <ion-row class="borderBottom">
+    <ion-col col-2>Order No</ion-col>
+    <ion-col col-4>Order Date/Time</ion-col>
+    <ion-col col-2>Status</ion-col>
+    <ion-col col-4>Status Date/Time</ion-col>
+  </ion-row>
+  <ion-row class="borderBottom" *ngFor="let order of orders" (click)="goToDetails(order)">
+    <ion-col col-2>{{order.no}}</ion-col>
+    <ion-col col-4>{{order.datetime}}</ion-col>
+    <ion-col col-2>{{order.status}}</ion-col>
+    <ion-col col-4>{{order.statusdatetime}}</ion-col>
+  </ion-row>
+</ion-grid>

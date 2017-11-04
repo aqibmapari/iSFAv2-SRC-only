@@ -1,0 +1,151 @@
+<ion-item-divider sticky>
+  {{selectedCustomer.name1}}
+</ion-item-divider>
+
+
+<ion-list no-padding>
+  <ion-item (click)="toggleDetails(data[0])" no-padding>
+    <ion-row>
+      <ion-col col-11>
+        <h2 padding-left>{{data[0].title}}</h2></ion-col>
+      <ion-col col-1>
+        <ion-icon color="primary" item-right [name]="data[0].icon"></ion-icon>
+      </ion-col>
+    </ion-row>
+
+    <ion-list [hidden]="!data[0].showDetails" no-padding no-margin (click)="$event.stopPropagation()">
+
+      <ion-item>
+        <ion-card>
+          <!-- <ion-card-header>
+            Bar Chart
+          </ion-card-header> -->
+          <ion-card-content>
+            <canvas #barCanvas></canvas>
+          </ion-card-content>
+        </ion-card>
+      </ion-item>
+    </ion-list>
+
+  </ion-item>
+
+  <ion-item (click)="toggleDetails(data[1])" no-padding>
+    <ion-row>
+      <ion-col col-11>
+        <h2 padding-left>{{data[1].title}}</h2></ion-col>
+      <ion-col col-1>
+        <ion-icon color="primary" item-right [name]="data[1].icon"></ion-icon>
+      </ion-col>
+    </ion-row>
+    <ion-list [hidden]="!data[1].showDetails" no-padding no-margin (click)="$event.stopPropagation()">
+
+      <ion-item>
+        <ion-card>
+          <!-- <ion-card-header>
+            Bar Chart
+          </ion-card-header> -->
+          <ion-card-content>
+            <canvas #barCanvas1></canvas>
+          </ion-card-content>
+        </ion-card>
+      </ion-item>
+    </ion-list>
+  </ion-item>
+
+  <ion-item (click)="toggleDetails(data[2])" no-padding>
+    <ion-row>
+      <ion-col col-11>
+        <h2 padding-left>{{data[2].title}}</h2></ion-col>
+      <ion-col col-1>
+        <ion-icon color="primary" item-right [name]="data[2].icon"></ion-icon>
+      </ion-col>
+    </ion-row>
+    <ion-list *ngIf="data[2].showDetails" no-padding no-margin (click)="$event.stopPropagation()">
+      <ion-item no-margin no-padding>
+        <ion-grid>
+          <ion-row>
+            <ion-col col-4><h4>Document No.</h4></ion-col>
+            <ion-col col-4><h4>Date</h4></ion-col>
+            <ion-col col-4><h4>Amount</h4></ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+
+      <ion-item no-margin no-padding *ngFor="let collectiondetail of reports.collectiondetails">
+        <ion-grid>
+          <ion-row>
+            <ion-col col-4><h4>{{collectiondetail.docno}}</h4></ion-col>
+            <ion-col col-4><h4>{{collectiondetail.date}}</h4></ion-col>
+            <ion-col col-4><h4>{{collectiondetail.amount}}</h4></ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    </ion-list>
+  </ion-item>
+
+  <ion-item (click)="toggleDetails(data[3])" no-padding>
+    <ion-row>
+      <ion-col col-11>
+        <h2 padding-left>{{data[3].title}}</h2></ion-col>
+      <ion-col col-1>
+        <ion-icon color="primary" item-right [name]="data[3].icon"></ion-icon>
+      </ion-col>
+    </ion-row>
+    <ion-list *ngIf="data[3].showDetails" no-padding no-margin (click)="$event.stopPropagation()">
+      <ion-item no-margin no-padding>
+        <ion-grid>
+          <ion-row>
+            <ion-col col-4><h4>Cheque No.</h4></ion-col>
+            <ion-col col-4><h4>Cheque Date</h4></ion-col>
+            <ion-col col-4><h4>Amount</h4></ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+
+      <ion-item no-margin no-padding *ngFor="let chequeBounce of reports.chequeBounceList">
+        <ion-grid>
+          <ion-row>
+            <ion-col col-4><h4>{{chequeBounce.docno}}</h4></ion-col>
+            <ion-col col-4><h4>{{chequeBounce.date}}</h4></ion-col>
+            <ion-col col-4><h4>{{chequeBounce.amount}}</h4></ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    </ion-list>
+  </ion-item>
+
+  <ion-item (click)="toggleDetails(data[4])" no-padding>
+    <ion-row>
+      <ion-col col-11>
+        <h2 padding-left>{{data[4].title}}</h2></ion-col>
+      <ion-col col-1>
+        <ion-icon color="primary" item-right [name]="data[4].icon"></ion-icon>
+      </ion-col>
+    </ion-row>
+    <ion-list *ngIf="data[4].showDetails" no-padding no-margin (click)="$event.stopPropagation()">
+      <ion-item no-margin no-padding>
+        <ion-grid>
+          <ion-row>
+            <ion-col col-3><h4>Year - Qtr</h4></ion-col>
+            <ion-col col-3><h4>Expected</h4></ion-col>
+            <ion-col col-3><h4>Received</h4></ion-col>
+            <ion-col col-3><h4>Balance</h4></ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+
+      <ion-item no-margin no-padding *ngFor="let cForm of reports.cFormList">
+        <ion-grid>
+          <ion-row>
+            <ion-col col-3><h4>{{cForm.year}} - {{cForm.qtr}}</h4></ion-col>
+            <ion-col col-3><h4>{{cForm.expected}}</h4></ion-col>
+            <ion-col col-3><h4>{{cForm.received}}</h4></ion-col>
+            <ion-col col-3><h4>{{cForm.balance}}</h4></ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    </ion-list>
+  </ion-item>
+
+
+</ion-list>

@@ -1,0 +1,43 @@
+<ion-list>
+    <ion-item-divider sticky>
+    {{selectedCustomer.name1}}
+    </ion-item-divider>
+    <ion-item>
+        <h2>Customer Number</h2>
+        <p>{{selectedCustomer.kunnr}}</p>
+    </ion-item>
+    <ion-item>
+        <h2>Address</h2>
+        <p>{{selectedCustomer.address}}</p>
+    </ion-item>
+    <ion-item>
+        <h2>Website</h2>
+        <p>{{selectedCustomer.website}}</p>
+    </ion-item>
+    <ion-item>
+        <h2>Last</h2>
+        <p></p>
+        <ion-row *ngIf="selectedCustomer.lastVisit != '' && selectedCustomer.lastVisit != null">
+          <ion-col col-6>
+            <h4>Visit</h4></ion-col>
+          <ion-col col-6>
+            <h4 ion-text text-end>{{selectedCustomer.lastVisit}}</h4></ion-col>
+        </ion-row>
+        <ion-row *ngIf="selectedCustomer.lastOrder != '' && selectedCustomer.lastOrder != null">
+          <ion-col col-6>
+            <h4>Order</h4></ion-col>
+          <ion-col col-6>
+            <h4 ion-text text-end>{{selectedCustomer.lastOrder}}</h4></ion-col>
+        </ion-row>
+    </ion-item>
+    <ion-item>
+        <h2>Next</h2>
+        <p></p>
+        <ion-row *ngIf="selectedCustomer.nextVisit != '' && selectedCustomer.nextVisit != null">
+          <ion-col col-6>
+            <h4>Visit</h4></ion-col>
+          <ion-col col-6>
+            <h4 ion-text text-end>{{selectedCustomer.nextVisit}}</h4></ion-col>
+        </ion-row>
+    </ion-item>
+</ion-list>

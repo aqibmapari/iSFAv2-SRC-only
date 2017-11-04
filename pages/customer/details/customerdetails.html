@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Customer</ion-title>
+  </ion-navbar>
+
+  <ion-toolbar no-border-top>
+    <!-- <ion-segment [(ngModel)]="segmentModel"> -->
+		<tabs-directive [tabmodel]="tabs" (segmentChange)="segmentValueChange($event);" [tabselected]="segmentModel"></tabs-directive>
+	<!-- </ion-segment> -->
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+<div [ngSwitch]="segmentModel">
+	<customer-details *ngSwitchCase="'customer'"></customer-details>
+	<customer-map *ngSwitchCase="'map'"></customer-map>
+	<customer-contact *ngSwitchCase="'contact'"></customer-contact>
+	<customer-attributes *ngSwitchCase="'attributes'"></customer-attributes>
+	<customer-credit *ngSwitchCase="'credit'"></customer-credit>
+	<customer-myorders *ngSwitchCase="'myorders'"></customer-myorders>
+	<customer-orders *ngSwitchCase="'orders'"></customer-orders>
+	<customer-activity *ngSwitchCase="'activity'"></customer-activity>
+	<customer-reports *ngSwitchCase="'reports'"></customer-reports>
+</div>
+</ion-content>

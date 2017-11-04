@@ -1,0 +1,42 @@
+<ion-item-divider sticky>
+{{selectedCustomer.name1}}
+</ion-item-divider>
+<ion-list no-padding>
+  <ion-item no-padding>
+    <ion-row>
+      <ion-col col-6><h4>Order</h4></ion-col>
+      <ion-col col-5><h4>Date</h4></ion-col>
+      <ion-col col-1></ion-col>
+    </ion-row>
+  </ion-item>
+  <ion-item no-padding *ngFor="let custorder of custorders" (click)="toggleDetails(custorder)">
+    <ion-row>
+      <ion-col col-6><h4>{{custorder.vbeln}}</h4></ion-col>
+      <ion-col col-5><h4>{{custorder.date}}</h4></ion-col>
+      <ion-col col-1><ion-icon color="primary" item-right [name]="custorder.icon"></ion-icon></ion-col>
+    </ion-row>
+    <ion-list *ngIf="custorder.showDetails" no-padding no-margin>
+      <ion-item no-padding>
+        <ion-row>
+          <ion-col col-12><h4>Article</h4></ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-4><h4>Invoice</h4></ion-col>
+          <ion-col col-4><h4>Invoice Date</h4></ion-col>
+          <ion-col col-4><h4>Invoice Qty UoM</h4></ion-col>
+        </ion-row>
+      </ion-item>
+      <ion-item no-padding *ngFor="let orderdetail of custorder.orderdetails">
+        <ion-row>
+          <ion-col col-12><h4>{{orderdetail.maktx}} ({{orderdetail.matnr}})</h4></ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-4><h4>{{orderdetail.invno}}</h4></ion-col>
+          <ion-col col-4><h4>{{orderdetail.invdate}}</h4></ion-col>
+          <ion-col col-4><h4>{{orderdetail.invqty}}</h4></ion-col>
+        </ion-row>
+      </ion-item>
+    </ion-list>
+  </ion-item>
+  <!-- <ion-item *ngIf="data[0].showDetails" no-padding>{{data[0].title}}</ion-item> -->
+</ion-list>
