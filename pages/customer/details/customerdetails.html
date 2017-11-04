@@ -14,7 +14,7 @@
 </ion-header>
 <ion-content>
 <div [ngSwitch]="segmentModel">
-	<customer-details *ngSwitchCase="'customer'"></customer-details>
+	<customer-info *ngSwitchCase="'customer'"></customer-info>
 	<customer-map *ngSwitchCase="'map'"></customer-map>
 	<customer-contact *ngSwitchCase="'contact'"></customer-contact>
 	<customer-attributes *ngSwitchCase="'attributes'"></customer-attributes>

@@ -1,14 +1,15 @@
 import { Component } from '@angular/core';
 import { NavParams } from 'ionic-angular';
+
 import {UtilService} from '../../../../providers/util.service';
 
 @Component({
-	selector: 'customer-details',
-	templateUrl: 'customerdetails.html'
+	selector: 'article-picture',
+	templateUrl: 'articlepicture.html'
 })
-export class CustomerDetails {
-	selectedCustomer : any;
+export class ArticlePicture {
+	selectedArticle : any;
 	constructor(private utilService: UtilService, private navParams: NavParams) {
-		this.selectedCustomer = navParams.get('selectedCustomer');
+		this.selectedArticle = navParams.get('selectedArticle');
 	}
 }

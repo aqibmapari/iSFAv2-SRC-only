@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
+import {ArticleListPage} from './list/articlelist';
 /**
  * Generated class for the ArticlePage page.
  *
@@ -14,12 +15,17 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'article.html',
 })
 export class ArticlePage {
-
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-  }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ArticlePage');
-  }
+	tabsArticle: Array<{title: string,value: string, root: any, icon: string}>;
+	segmentModel: string;
+	constructor(public navCtrl: NavController) {
+		this.tabsArticle = [
+			{ title: "Article",value:"list", root: ArticleListPage, icon: "calendar" }
+		];
+		this.segmentModel = "list";
+	}
+	segmentValueChange(value:string):void {
+		//console.log(value);
+		this.segmentModel = value;
+	}
 
 }

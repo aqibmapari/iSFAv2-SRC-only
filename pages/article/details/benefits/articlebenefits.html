@@ -1,0 +1,8 @@
+<ion-list>
+    <ion-item-divider sticky>
+    {{selectedArticle.maktx}}
+    </ion-item-divider>
+    <ion-item *ngFor="let benefit of selectedArticle.benefits">
+        <p ion-text text-wrap>{{benefit.text}}</p>
+    </ion-item>
+</ion-list>

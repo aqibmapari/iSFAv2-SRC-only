@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Article</ion-title>
+  </ion-navbar>
+
+  <ion-toolbar no-border-top>
+    <!-- <ion-segment [(ngModel)]="segmentModel"> -->
+		<tabs-directive [tabmodel]="tabs" (segmentChange)="segmentValueChange($event);" [tabselected]="segmentModel"></tabs-directive>
+	<!-- </ion-segment> -->
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+<div [ngSwitch]="segmentModel">
+	<article-info *ngSwitchCase="'article'"></article-info>
+	<article-applications *ngSwitchCase="'applications'"></article-applications>
+	<article-attributes *ngSwitchCase="'attributes'"></article-attributes>
+	<article-benefits *ngSwitchCase="'benefits'"></article-benefits>
+	<article-picture *ngSwitchCase="'picture'"></article-picture>
+	<article-specifications *ngSwitchCase="'specifications'"></article-specifications>
+	<article-videos *ngSwitchCase="'videos'"></article-videos>
+</div>
+</ion-content>
+

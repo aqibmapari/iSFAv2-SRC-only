@@ -1,0 +1,11 @@
+
+	<ion-item-group *ngFor="let group of groupedObjects">
+
+		<ion-item-divider light sticky>{{group.letter}}</ion-item-divider>
+		<ion-item *ngFor="let obj of group.object" (click)="goToDetails(obj)">{{obj.maktx}}
+			<ion-note item-right>
+			{{obj.matnr}}
+			</ion-note>
+		</ion-item>
+
+	</ion-item-group>
