@@ -1,11 +1,12 @@
 import 'rxjs/add/operator/map'
 export class SharedService {
-    ip : string ;
-    apiObj : Array<{key: string, className: string}>;
-    pages: Array<{}>;
-    pernr : string;
-    menuArray : Array<{}>;
-    subMenuArray : Array<{}>;
+    private ip : string ;
+    private apiObj : Array<{key: string, className: string}>;
+    private pages: Array<{}>;
+    private pernr : string;
+    private menuArray : Array<{}>;
+    private subMenuArray : Array<{}>;
+    private pwd: string;
     constructor() {
     }
 
@@ -31,6 +32,14 @@ export class SharedService {
 
     getPernr() {
         return this.pernr;
+    }
+
+    setPwd(pwd) {
+        this.pwd = pwd;
+    }
+
+    getPwd() {
+        return this.pwd;
     }
 
     setAPIObj(apiObj) {

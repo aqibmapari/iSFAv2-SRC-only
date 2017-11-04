@@ -86,6 +86,8 @@ onLogin(form) {
           'WHERE pernr=? and password=?',[this.utilService.encode64(username),this.utilService.encode64(password)],0)
           .then((results) => {
               console.log(JSON.stringify(results));
+              this.sharedService.setPernr(username);
+              this.sharedService.setPwd(password);
               this.nav.setRoot('Home');
               // if(results['rows'].length !== 0){
               //     var row = results['rows']['item'](0);

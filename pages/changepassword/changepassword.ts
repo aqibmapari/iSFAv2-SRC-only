@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, Platform, NavParams,ViewController } from 'ionic-angular';
 
+import { SharedService } from "../../providers/sharedservice";
 /**
  * Generated class for the ChangepasswordPage page.
  *
@@ -14,14 +15,16 @@ import { IonicPage, Platform, NavParams,ViewController } from 'ionic-angular';
   templateUrl: 'changepassword.html',
 })
 export class ChangePasswordPage {
-  model: {oldpassword?: string, newpassword?: string, confirmpassword?: string} = {};
+  model: {oldpassword?: string, newpassword?: string, confirmpassword?: string,currentpassword?: string} = {};
   submitted = false;
+  submitDisabled = true;
   constructor(
     public platform: Platform,
     public params: NavParams,
-    public viewCtrl: ViewController
+    public viewCtrl: ViewController,
+    private sharedService: SharedService
   ) {
-
+    this.model.currentpassword = this.sharedService.getPwd();
   }
   onSubmit(form) {
     this.submitted = true;
