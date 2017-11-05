@@ -4,6 +4,7 @@ export class SharedService {
     private apiObj : Array<{key: string, className: string}>;
     private pages: Array<{}>;
     private pernr : string;
+    private userName : string;
     private menuArray : Array<{}>;
     private subMenuArray : Array<{}>;
     private pwd: string;
@@ -32,6 +33,14 @@ export class SharedService {
 
     getPernr() {
         return this.pernr;
+    }
+
+    setUserName(userName) {
+        this.userName = userName;
+    }
+
+    getUserName() {
+        return this.userName;
     }
 
     setPwd(pwd) {

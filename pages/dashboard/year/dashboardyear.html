@@ -1,0 +1,6 @@
+<div [ngSwitch]="displayId">
+  <target-acheived *ngSwitchCase="'1'" period="year"></target-acheived>
+  <regular-top10 *ngSwitchCase="'2'" period="year"></regular-top10>
+  <os-aging *ngSwitchCase="'3'" period="year"></os-aging>
+  <top10-sales *ngSwitchCase="'4'" period="year"></top10-sales>
+</div>

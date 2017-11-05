@@ -88,6 +88,7 @@ onLogin(form) {
               console.log(JSON.stringify(results));
               this.sharedService.setPernr(username);
               this.sharedService.setPwd(password);
+              this.sharedService.setUserName('Izhar Ahmed');
               this.nav.setRoot('Home');
               // if(results['rows'].length !== 0){
               //     var row = results['rows']['item'](0);
