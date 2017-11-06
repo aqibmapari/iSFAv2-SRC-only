@@ -34,7 +34,7 @@ export class DashboardPage {
 
     this.rightOptions = [
 			{ text: "Target Vs Acheived",value:"1"},
-			{ text: "Regular Top 10 Customers",value:"2" },
+			// { text: "Regular Top 10 Customers",value:"2" },
 			{ text: "Total O/S Aging (Rs)",value:"3" },
 			{ text: "Top 10 Customer Sales",value:"4" }
     ];

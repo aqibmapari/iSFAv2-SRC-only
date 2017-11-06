@@ -8,6 +8,7 @@ export class SharedService {
     private menuArray : Array<{}>;
     private subMenuArray : Array<{}>;
     private pwd: string;
+    private isApp: boolean;
     constructor() {
     }
 
@@ -26,7 +27,13 @@ export class SharedService {
     getIP() {
         return this.ip;
     }
+    setIsApp(isApp) {
+        this.isApp = isApp;
+    }
 
+    getIsApp() {
+        return this.isApp;
+    }
     setPernr(pernr) {
         this.pernr = pernr;
     }

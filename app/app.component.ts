@@ -28,8 +28,10 @@ export class MyApp {
 		public createTables: CreateAllTablesService,
 		public utilService: UtilService
 	) {
+		console.log(this.platform)
 		this.initializeApp();
-		sharedService.setIP('http://123/rajhanssales');
+		sharedService.setIP('http://123/bsales5jan');
+		sharedService.setIsApp(platform.is('core') || platform.is('mobileweb')? false: true);
 		sharedService.setAPIObj([{key: 'user', className: '/getUserJsonAction.do'},
 			{key: 'authenticate', className: '/ValidateLoginAction.do'},
 			{key: 'dashboardvideo', className: '/VideoMessageAction.do'},
@@ -81,19 +83,24 @@ export class MyApp {
 			// Here you can do any higher level native things you might need.
 			this.statusBar.styleDefault();
 			this.splashScreen.hide();
-			this.databaseService.openDB().then((obj) => {
-				this.databaseService.createTableQuery('empdetails',
-				'pernr int, nachn text,vorna text,role int,password text, roledesc text,reportto text,emailid text,designation text, status text,imei text,simno text,cleardata text,grp text,server text')
-				.then((obj) => {
-					console.log('table created empdetails');
-					this.rootPage = 'Login';//Login;
+			if(this.sharedService.getIsApp()){
+				this.databaseService.openDB().then((obj) => {
+					this.databaseService.createTableQuery('empdetails',
+					'pernr int, nachn text,vorna text,role int,password text, roledesc text,reportto text,emailid text,designation text, status text,imei text,simno text,cleardata text,grp text,server text')
+					.then((obj) => {
+						console.log('table created empdetails');
+						this.rootPage = 'Login';//Login;
+					}, (err) => {
+						console.log(JSON.stringify(err));
+					});
+					this.createTables.createAllTables();
 				}, (err) => {
 					console.log(JSON.stringify(err));
 				});
-				this.createTables.createAllTables();
-			}, (err) => {
-				console.log(JSON.stringify(err));
-			});
+			}
+			else{
+				this.rootPage = 'Login';
+			}
 
 		});
 	}

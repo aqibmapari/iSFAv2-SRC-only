@@ -59,7 +59,7 @@
   </ion-row>
   <ion-row>
     <ion-col col-3><ion-input type="text" placeholder="Document No" [(ngModel)]="creditModel.docno"></ion-input></ion-col>
-      <ion-col col-3><ion-select [(ngModel)]="creditModel.doctype">
+      <ion-col col-3><ion-select [(ngModel)]="creditModel.doctype" interface="popover">
       <ion-option value="Cheque">Cheque</ion-option>
       <ion-option value="Cash">Cash</ion-option>
       <ion-option value="EFT">EFT</ion-option>

@@ -56,8 +56,9 @@ ngOnInit() {
               var imei = this.utilService.encode64(row.imei);
               var simno = this.utilService.encode64(row.simno);
               var cleardata = this.utilService.encode64(row.wipeflag);
-              var grp = this.utilService.encode64(row.group.trim());
-              var server = this.utilService.encode64(row.server);
+            //   var grp = this.utilService.encode64(row.group.trim());
+            var grp = this.utilService.encode64(row.group);
+            var server = this.utilService.encode64(row.server);
 
               this.databaseService.insertIntoTableQuery('empdetails',
               'pernr,nachn,vorna,role,password, roledesc,reportto,emailid,designation,status,imei,simno,cleardata,grp,server',
