@@ -1,3 +1,15 @@
-<ion-item-divider sticky>
-	{{period}} Top10 Customer Sales
-</ion-item-divider>
+<div class="graph-list1" *ngFor="let item of salesData">
+	<div class="graph-content" style="text-align: left;">{{item.name}}</div>
+	<div class="meter">
+	<span [style.width]="item.width" [style.background-color]="item.color">
+	<span class="progress1">
+	<article style="float: right;"></article>
+	<article *ngIf="item.per >= 50" class="progress-title1">&nbsp;{{item.per}}% </article>
+	</span>
+	</span>
+	<article *ngIf="item.per < 50" class="progress-title2">&nbsp;{{item.per}}% </article>
+	</div>
+	<div class="graph-content1">
+	<div class="graph-sales">{{item.value | commaFormat}}</div>
+	</div>
+</div>

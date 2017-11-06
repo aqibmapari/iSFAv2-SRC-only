@@ -1,3 +1,81 @@
 top10-sales {
 
+.graph-list1 {
+  background-color:#fff;
+  padding-bottom:4px;
+  padding-top:4px;
+  margin-top:5px;
+  text-align: left;
+  width: 100%;
+  float: left;
+}
+.graph-content {
+	width:45%;
+	padding-left:5px;
+	font-size:15px;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow:hidden;
+	border:0px solid #000;
+	float:left;
+}
+.meter {
+	margin:0 auto;
+	margin-left:5px;
+	margin-right:5px;
+	width:30%;
+	height:19px;
+	font-size:15px;
+  position: relative;/*
+  background: #f3efe6;*/
+  overflow: hidden;
+	border:0px solid #000;
+	float:left;
+}
+
+.meter span {
+    display: block;
+    height: 100%;
+    float: left;
+}
+.progress-title {
+	font-size: 15px;
+	color: #000;
+	float: left;
+	text-align: left;
+	padding-left: 5px;
+}
+
+.progress-title1 {
+	font-size: 10px;
+	color: #000;
+	float: left;
+	text-align: left;/*
+	padding-left: 5px; */
+	margin-left:5px;
+	margin-top: 3px;/*
+	font-weight: bold; */
+}
+
+.progress-title2 {
+	font-size: 10px;
+	color: #fff;
+	text-align: right;/*
+	padding-left: 5px; */
+	margin-top: 3px;/*
+	font-weight: bold; */
+}
+
+.progress {
+	padding:1px;
+	text-align: right;
+	color: #fff;
+	font-size: 15px;
+    background-color: #2E8B57;
+    -webkit-animation: progressBar 1s ease-in-out;
+    -webkit-animation-fill-mode:both;
+    -moz-animation: progressBar 1s ease-in-out;
+    -moz-animation-fill-mode:both;
+    float: left;
+}
 }

@@ -172,4 +172,88 @@ export class UtilService {
     	var returnDateTime = isTimeZoneIndependent?(d.getTime()-(d.getTimezoneOffset()*60000)):d.getTime();
     	return returnDateTime;
     }
+    getPercentage(ach, tar){
+        if(tar === 0 || isNaN(tar) || isNaN(ach)) return 0;
+        else return (ach/tar*100);
+    }
+    getDateWiseWeekNoOfMonth (date){
+        let currDate = date.getDate();
+        let weekNo = currDate / 7;
+        var tempWeekNo = parseInt(weekNo+"",10);
+        if(weekNo > tempWeekNo){
+            tempWeekNo++;
+        }
+        return tempWeekNo;
+    }
+    addCommas(nStr)
+    {
+        var flag = 0;
+        nStr += '';
+        if(nStr.indexOf('-')!= -1){
+            flag++;
+            nStr = nStr.replace('-','');
+        }
+        var x = nStr.split('.');
+        var x1 = x[0];
+        var x2 = x.length > 1 ? '.' + x[1] : '';
+        var rgx = /(\d+)(\d{3})/;
+        while (rgx.test(x1)) {
+            x1 = x1.replace(rgx, '$1' + ',' + '$2');
+        }
+        if(flag != 0){
+            x1 = '-'+x1;
+        }
+        return x1 + x2;
+    }
+    getDisplayColor(actual,target,curtab){
+        console.log(curtab);
+        var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
+		var date = new Date().getTime() - oneDay;
+		var weekNo = this.getDateWiseWeekNoOfMonth(new Date(date));
+		var monthNo = new Date(date).getMonth();
+		var color = '';
+		var checkPer = 1;
+		target = isNaN(target) ? 0 : parseInt(target,10);
+		if(curtab === 'month'){
+			if(weekNo == 1){
+				checkPer = 0.1*target;
+			}
+			else if(weekNo == 2){
+				checkPer = 0.3*target;
+			}
+			else if(weekNo == 3){
+				checkPer = 0.6*target;
+			}
+			else if(weekNo == 4 || weekNo == 5){
+				checkPer = target;
+			}
+		}
+		else{
+			if(monthNo >= 0 && monthNo <= 2){
+				checkPer = 0.24*target;
+			}
+			else if(monthNo >= 3 && monthNo <= 5){
+				checkPer = 0.47*target;
+			}
+			else if(monthNo >= 6 && monthNo <= 8){
+				checkPer = 0.73*target;
+			}
+			else if(monthNo >= 9 && monthNo <= 11){
+				checkPer = target;
+			}
+		}
+		var tempTarget = parseInt(checkPer+"",10);
+		var tempActual = parseInt(actual,10);
+
+		if(tempActual >= 0.9*tempTarget && tempActual <= tempTarget){
+			color = '#FFD700'; //amber
+		}
+		else if(tempActual < tempTarget){
+			color = '#FF0000'; //red
+		}
+		else if(tempActual > tempTarget){
+			color = '#2E8B57'; //green
+		}
+		return color;
+	}
 }

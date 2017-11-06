@@ -18,6 +18,7 @@ Install the required npm modules
 
 ```
 npm install chart.js --save
+npm install c3 --save
 ```
 
 Install required cordova plugins
