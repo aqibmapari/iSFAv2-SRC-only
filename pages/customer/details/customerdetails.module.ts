@@ -12,9 +12,6 @@ import {CustomerMap} from './map/customermap';
 import {CustomerMyOrders} from './myorders/customermyorders';
 import {CustomerOrders} from './orders/customerorders';
 import {CustomerReports} from './reports/customerreports';
-import {AddContactPage} from './contact/addContact/addcontact';
-import {OrderDetailsPage} from './myorders/orderdetails/orderdetails';
-import {InvDetailsPage} from './credit/invdetails/invdetails';
 
 @NgModule({
     declarations: [
@@ -27,10 +24,7 @@ import {InvDetailsPage} from './credit/invdetails/invdetails';
         CustomerMap,
         CustomerMyOrders,
         CustomerOrders,
-        CustomerReports,
-        AddContactPage,
-        OrderDetailsPage,
-        InvDetailsPage
+        CustomerReports
     ],
     imports: [
         TabsComponentModule,

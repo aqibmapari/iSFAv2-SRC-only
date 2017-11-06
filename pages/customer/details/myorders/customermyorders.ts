@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { NavParams, ModalController } from 'ionic-angular';
 
 import {UtilService} from '../../../../providers/util.service';
-import {OrderDetailsPage} from './orderdetails/orderdetails';
 
 @Component({
 	selector: 'customer-myorders',
@@ -22,7 +21,7 @@ export class CustomerMyOrders {
 		]
 	}
 	goToDetails(order){
-		let modal = this.modalCtrl.create(OrderDetailsPage,{order: order});
+		let modal = this.modalCtrl.create("OrderDetailsPage",{order: order});
 		modal.present();
 	}
 }

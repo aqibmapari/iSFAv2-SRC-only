@@ -1,20 +1,12 @@
 import { Component } from '@angular/core';
-import {Platform, NavParams, ViewController } from 'ionic-angular';
+import {Platform, NavParams, ViewController,IonicPage } from 'ionic-angular';
 
-// import {UtilService} from '../../app/services/util.service';
-// import {DatabaseService} from '../../app/services/database.service';
-// import {SharedService} from '../../app/services/sharedservice';
-// import {APIRequestService} from '../../app/services/apirequest.service';
-// import {AfterLoginAPIService} from '../../app/services/afterloginapi.service';
-// import {MasterSyncAPIService} from '../../app/services/mastersyncapi.service';
-// import {CustomerSyncAPIService} from '../../app/services/customersyncapi.service';
-// import {VisitSyncAPIService} from '../../app/services/visitsyncapi.service';
+@IonicPage()
 @Component({
-  selector: 'page-orderdetails',
   templateUrl: 'orderdetails.html'
 })
 export class OrderDetailsPage {
-    order;
+    order: any;
     data: Array<{title: string, icon: string, showDetails: boolean, index: number}> = [];
     constructor(
         public platform: Platform,

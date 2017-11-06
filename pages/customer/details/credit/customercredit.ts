@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { NavParams, ModalController } from 'ionic-angular';
 
 import {UtilService} from '../../../../providers/util.service';
-import {InvDetailsPage} from './invdetails/invdetails';
 
 @Component({
 	selector: 'customer-credit',
@@ -35,7 +34,7 @@ export class CustomerCredit {
 			{maktx: "MCCAIN BRONZE 9 X 9 2.5 KG", matnr: "202223", invno: "0094518389", invvalue: "1,005.00", invqty: "300.0 UOS"},
 			{maktx: "MCCAIN BRONZE 9 X 9 5 KG", matnr: "202224", invno: "0094518388", invvalue: "2,561.54", invqty: "500.0 UOS"}
 		];
-		let modal = this.modalCtrl.create(InvDetailsPage,{invdetails: invoice});
+		let modal = this.modalCtrl.create("InvDetailsPage",{invdetails: invoice});
 		modal.present();
 	}
 }

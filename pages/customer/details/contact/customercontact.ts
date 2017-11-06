@@ -3,7 +3,6 @@ import { NavParams, ModalController  } from 'ionic-angular';
 
 import {UtilService} from '../../../../providers/util.service';
 import {SharedService} from '../../../../providers/sharedservice';
-import {AddContactPage} from './addContact/addcontact';
 
 @Component({
   selector: 'customer-contact',
@@ -57,7 +56,7 @@ export class CustomerContact {
 		// });
     }
 		addContact(){
-			let modal = this.modalCtrl.create(AddContactPage,{contact: {blankImage: "assets/img/whiteBG.png"}}, {showBackdrop: false});
+			let modal = this.modalCtrl.create("AddContactPage",{contact: {blankImage: "assets/img/whiteBG.png"}}, {showBackdrop: false});
 			modal.present();
 		}
 		pickContact(){
@@ -65,7 +64,7 @@ export class CustomerContact {
 		}
 		editContact(obj){
       obj.blankImage = "assets/img/whiteBG.png";
-      let modal = this.modalCtrl.create(AddContactPage,{contact: obj});
+      let modal = this.modalCtrl.create("AddContactPage",{contact: obj});
 			modal.present();
 		}
 		deleteContact(obj){
