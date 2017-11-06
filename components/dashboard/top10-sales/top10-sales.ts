@@ -15,6 +15,8 @@ export class Top10SalesComponent implements OnInit{
 			{name: "Hypercity",per: 0, value: 25000, target: 35000, width: '', color: ''},
 			{name: "Hypercity",per: 0, value: 25000, target: 35000, width: '', color: ''}
 		]
+	}
+	ngOnInit(){
 		for(var i=0; i<this.salesData.length; i++){
 			let row = this.salesData[i];
 			this.salesData[i].per = this.utilService.getPercentage(row.value,row.target);
@@ -22,8 +24,5 @@ export class Top10SalesComponent implements OnInit{
 			this.salesData[i].color = this.utilService.getDisplayColor(row.value,row.target,this.period);
 			console.log(this.salesData[i].color);
 		}
-	}
-	ngOnInit(){
-
 	}
 }
