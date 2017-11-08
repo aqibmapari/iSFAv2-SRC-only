@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, Platform, NavParams,ViewController } from 'ionic-angular';
+import { IonicPage, Platform, NavParams,ViewController, NavController } from 'ionic-angular';
 
 import { SharedService } from "../../providers/sharedservice";
+import { APIRequestService } from "../../providers/apirequest.service";
+import { DatabaseService } from "../../providers/database.service";
+import { UtilService } from "../../providers/util.service";
 /**
  * Generated class for the ChangepasswordPage page.
  *
@@ -19,10 +22,14 @@ export class ChangePasswordPage {
   submitted = false;
   submitDisabled = true;
   constructor(
-    public platform: Platform,
-    public params: NavParams,
-    public viewCtrl: ViewController,
-    private sharedService: SharedService
+    private nav: NavController,
+    private platform: Platform,
+    private params: NavParams,
+    private viewCtrl: ViewController,
+    private sharedService: SharedService,
+    private apiRequestService: APIRequestService,
+    private databaseService: DatabaseService,
+    private utilService: UtilService
   ) {
     this.model.currentpassword = this.sharedService.getPwd();
   }
@@ -33,6 +40,33 @@ export class ChangePasswordPage {
       let oldpassword = this.model.oldpassword;
       let newpassword = this.model.newpassword;
       let confirmpassword = this.model.confirmpassword;
+      this.apiRequestService.presentLoader('Please Wait...');
+      let ip = this.sharedService.getIP();
+      let pernr = this.sharedService.getPernr();
+      let className = this.sharedService.getAPIObj('changepwd');
+      let action = "?empid="+pernr+"&oldpassword="+oldpassword+"&newpassword="+newpassword;
+      this.apiRequestService.getAPI(ip+className+action).then((data) => {
+        if(data['response'][0]['status'] === "success"){
+          let params = [this.utilService.encode64(newpassword), this.utilService.encode64(pernr)];
+          this.databaseService.updateTableQuery("empdetails","password=?","where pernr=?",params,0)
+          .then((results) => {
+            console.log(JSON.stringify(results));
+            this.apiRequestService.dismissLoader();
+            this.apiRequestService.presentToast('Password Updated successfully.');
+            this.nav.setRoot('Login');
+          }, (err) => {
+              console.log(JSON.stringify(err));
+          });
+        }
+        else{
+          this.apiRequestService.dismissLoader();
+          this.apiRequestService.presentToast('Error while resetting password');
+        }
+      }, (err) => {
+        console.log((err));
+        this.apiRequestService.dismissLoader();
+        this.apiRequestService.presentToast('Could not connect to server');
+    });
     }
   }
   dismiss() {

@@ -29,6 +29,10 @@ export class APIRequestService {
         });
         this.loader.present();
     }
+    updateLoaderContent(text){
+        if(this.loader === null || this.loader === undefined) this.presentLoader(text);
+        this.loader.data.content = text;
+    }
     presentToast(text) {
         let toast = this.toastCtrl.create({
             message: text,

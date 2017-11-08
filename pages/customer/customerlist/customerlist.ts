@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { NavController } from 'ionic-angular';
 import {UtilService} from '../../../providers/util.service';
@@ -10,7 +10,7 @@ import {SharedService} from '../../../providers/sharedservice';
 	selector: 'customer-list',
 	templateUrl: 'customerlist.html'
 })
-export class CustomerListPage {
+export class CustomerListPage implements OnInit {
 	items = [];
     groupedObjects = [];
 	constructor(public navCtrl: NavController,
@@ -32,7 +32,7 @@ export class CustomerListPage {
 		'*',
 		'WHERE pernr=?',[this.utilService.encode64(pernr)],0)
 		.then((results) => {
-			// console.log(JSON.stringify(results));
+			console.log(JSON.stringify(results));
 			if(results['rows'] && results['rows'].length !== 0){
 				for(var i=0; i<results['rows'].length; i++){
 					var row = results['rows']['item'](i);

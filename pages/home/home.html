@@ -1,12 +1,12 @@
 <ion-header>
 	<ion-card>
-		<img src="../../assets/img/logo.png"/>
+		<img src="./assets/img/logo.png"/>
 	</ion-card>
 </ion-header>
 <ion-content>
 	<ion-grid>
 		<ion-row *ngFor="let doubles of getDoubles()">
-			<ion-col *ngFor="let item of doubles" (click)="openPage(item)">
+			<ion-col *ngIf="item.show" *ngFor="let item of doubles" (click)="openPage(item)">
 				<ion-item style="text-align:center !important;">
 					<ion-icon [name]='item.iconName' color="primary" style="font-size:24px;"></ion-icon><br>
 					<label>{{item.title}}</label>

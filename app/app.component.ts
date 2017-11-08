@@ -30,7 +30,8 @@ export class MyApp {
 	) {
 		console.log(this.platform)
 		this.initializeApp();
-		sharedService.setIP('http://123/bsales5jan');
+		// sharedService.setIP('http://212.118.101.174:8081/bsalesfs');
+		sharedService.setIP('http://212.118.101.172:8081/bsales5jan');
 		sharedService.setIsApp(platform.is('core') || platform.is('mobileweb')? false: true);
 		sharedService.setAPIObj([{key: 'user', className: '/getUserJsonAction.do'},
 			{key: 'authenticate', className: '/ValidateLoginAction.do'},
@@ -48,15 +49,16 @@ export class MyApp {
 			{key: 'credit', className: '/CustomerCreditToApp.do'},
 			{key: 'sodetails', className: '/GetOrderStatusToApp.do'},
 			{key: 'custcontact', className: '/GetCustomerContactDetails.do'},
-			{key: 'custasset', className: '/GetCustAssetsToApp.do'}
+			{key: 'custasset', className: '/GetCustAssetsToApp.do'},
+			{key: 'changepwd', className: '/GetPasswordChangeReqFromApp.do'}
 		]);
 		// used for an example of ngFor and navigation
 		sharedService.setPages( [
 			{ title: 'My Activity',id : 'myactivity',show: false, component: 'MyActivity', iconName:'list-box', iosIcon:'ios-list-box', androidIcon:'md-list-box' },
-			{ title: 'Dashboard',id : 'dashboard',show: false, component: 'Dashboard', iconName:'pie', iosIcon:'ios-pie', androidIcon:'md-pie' },
+			{ title: 'Dashboard',id : 'dashboard',show: true, component: 'Dashboard', iconName:'pie', iosIcon:'ios-pie', androidIcon:'md-pie' },
 			{ title: 'Diary',id : 'diary',show: false, component: 'Diary', iconName:'calendar', iosIcon:'ios-calendar', androidIcon:'md-calendar' },
-			{ title: 'Customer',id : 'customer',show: false, component: 'Customer', iconName:'person', iosIcon:'ios-person', androidIcon:'md-person' },
-			{ title: 'Article',id : 'article',show: false, component: 'Article', iconName:'logo-dropbox', iosIcon:'logo-dropbox', androidIcon:'logo-dropbox' },
+			{ title: 'Customer',id : 'customer',show: true, component: 'Customer', iconName:'person', iosIcon:'ios-person', androidIcon:'md-person' },
+			{ title: 'Article',id : 'article',show: true, component: 'Article', iconName:'logo-dropbox', iosIcon:'logo-dropbox', androidIcon:'logo-dropbox' },
 			{ title: 'Lead',id : 'lead',show: false, component: 'Lead', iconName:'people', iosIcon:'ios-people', androidIcon:'md-people' },
 			{ title: 'Potential',id : 'potential',show: false, component: 'Potential', iconName:'trending-up', iosIcon:'ios-trending-up', androidIcon:'md-trending-up' },
 			{ title: 'Price List',id : 'pricelist',show: false, component: 'PriceList', iconName:'logo-usd', iosIcon:'logo-usd', androidIcon:'logo-usd' },

@@ -54,7 +54,9 @@ export class SyncModalPage {
     }
     insertData(){
         this.apiRequestService.presentLoader('Please Wait... All Data Syncing.');
+        this.apiRequestService.updateLoaderContent("Getting Customer Master");
         this.customerSyncAPIService.callCustomer(0).then((obj) => {
+            this.apiRequestService.updateLoaderContent("Getting Visit Master");
             this.visitSyncAPIService.callVisitPJP().then((obj) => {
                 // add visit/call related API here later
                 this.customerSyncAPIService.callCustCredit(0,0).then((obj) => {

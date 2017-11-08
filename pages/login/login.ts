@@ -30,8 +30,8 @@ constructor(public nav: NavController,
       public sharedService: SharedService,
       public apiRequestService: APIRequestService,
       public afterLoginAPIService: AfterLoginAPIService) {
-          this.login.username = '40143';
-          this.login.password = '40143';
+          this.login.username = '39918';
+          this.login.password = 'mian';
 }
 ngOnInit() {
       this.apiRequestService.presentLoader('Please Wait...');
@@ -90,40 +90,45 @@ onLogin(form) {
               this.sharedService.setPernr(username);
               this.sharedService.setPwd(password);
               this.sharedService.setUserName('Izhar Ahmed');
-              this.nav.setRoot('Home');
-              // if(results['rows'].length !== 0){
-              //     var row = results['rows']['item'](0);
-              //     // var dpernr = this.utilService.decode64(row.pernr);
-              //     // var dpassword = this.utilService.decode64(row.password);
-              //     var dnachn = this.utilService.decode64(row.nachn);
-              //     var dvorna = this.utilService.decode64(row.vorna);
-              //     var drole = this.utilService.decode64(row.role);
-              //     var dgrp = (this.utilService.decode64(row.grp));
-              //     var demailid = this.utilService.decode64(row.emailid);
-              //     // var dserver = this.utilService.decode64(row.server);
-              //     // var eserver = row.server;
-              //     // alert(username);
-              //     this.sharedService.setPernr(username);
-              //     window.sessionStorage.setItem("userfname",dnachn);
-              //     window.sessionStorage.setItem("userlname",dvorna);
-              //     window.sessionStorage.setItem("curentuseridforcalender",username);
-              //     window.sessionStorage.setItem("empname",dnachn+" "+dvorna);
-              //     window.sessionStorage.setItem("dept",dgrp);
-              //     window.sessionStorage.setItem("drole",drole);
-              //     //window.sessionStorage.setItem("dept","Pre-Sales");
-              //     window.sessionStorage.setItem("pwd",password);
-              //     if(this.utilService.checkEncodedBlank(demailid) != 'null'){
-              //         window.sessionStorage.setItem("useremailid",demailid);
-              //     }
-              //     else{
-              //         window.sessionStorage.setItem("useremailid",'');
-              //     }
-              //
-              //     // this.nav.setRoot(Home);
-              //     // this.authenticate();
-              //     this.apiRequestService.presentLoader('Please Wait...');
-              //     this.insertSettingsData();
-              // }
+              if(!this.sharedService.getIsApp()){
+                this.nav.setRoot('Home');
+              }
+              else{
+                if(results['rows'].length !== 0){
+                    var row = results['rows']['item'](0);
+                    // var dpernr = this.utilService.decode64(row.pernr);
+                    // var dpassword = this.utilService.decode64(row.password);
+                    var dnachn = this.utilService.decode64(row.nachn);
+                    var dvorna = this.utilService.decode64(row.vorna);
+                    var drole = this.utilService.decode64(row.role);
+                    var dgrp = (this.utilService.decode64(row.grp));
+                    var demailid = this.utilService.decode64(row.emailid);
+                    // var dserver = this.utilService.decode64(row.server);
+                    // var eserver = row.server;
+                    // alert(username);
+                    this.sharedService.setPernr(username);
+                    let userObj = {
+                        userfname: dnachn,
+                        userlname: dvorna,
+                        curentuseridforcalender: username,
+                        empname: dnachn+" "+dvorna,
+                        dept: dgrp,
+                        drole: drole,
+                        pwd: password,
+                        useremailid: demailid
+                    }
+                    this.sharedService.setUserObj(userObj);
+                    this.nav.setRoot('Home');
+                    // this.authenticate();
+
+                    // this.apiRequestService.presentLoader('Please Wait...');
+                    // this.insertSettingsData();
+                }
+                else{
+                    this.apiRequestService.presentToast('Invalid User!!!');
+                }
+              }
+
           }, (err) => {
               console.log(JSON.stringify(err));
           });

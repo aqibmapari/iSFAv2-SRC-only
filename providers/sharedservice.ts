@@ -9,6 +9,7 @@ export class SharedService {
     private subMenuArray : Array<{}>;
     private pwd: string;
     private isApp: boolean;
+    private userObj: any;
     constructor() {
     }
 
@@ -18,6 +19,13 @@ export class SharedService {
 
     getPages() {
         return this.pages;
+    }
+    setUserObj(userObj) {
+        this.userObj = userObj;
+    }
+
+    getUserObj() {
+        return this.userObj;
     }
 
     setIP(ip) {
