@@ -76,13 +76,13 @@ ngOnInit() {
             //       console.log(JSON.stringify(err));
             //   });
           }
-          this.databaseService.executeBatchRequest(batchArray).then((obj) => {
-            console.log((new Date()+" empdetailsinserted"));
-            console.log(JSON.stringify(obj));
-            this.apiRequestService.dismissLoader();
-        }, (err) => {
-            console.error('Unable to execute sql: ', err);
-        });
+            this.databaseService.executeBatchRequest(batchArray).then((obj) => {
+                console.log((new Date()+" empdetailsinserted"));
+                console.log(JSON.stringify(obj));
+                this.apiRequestService.dismissLoader();
+            }, (err) => {
+                console.error('Unable to execute sql: ', err);
+            });
       }, (err) => {
           console.log((err));
           this.apiRequestService.dismissLoader();

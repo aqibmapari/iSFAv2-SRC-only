@@ -54,21 +54,21 @@ export class MyApp {
 		]);
 		// used for an example of ngFor and navigation
 		sharedService.setPages( [
-			{ title: 'My Activity',id : 'myactivity',show: false, component: 'MyActivity', iconName:'list-box', iosIcon:'ios-list-box', androidIcon:'md-list-box' },
+			// { title: 'My Activity',id : 'myactivity',show: false, component: 'MyActivity', iconName:'list-box', iosIcon:'ios-list-box', androidIcon:'md-list-box' },
 			{ title: 'Dashboard',id : 'dashboard',show: true, component: 'Dashboard', iconName:'pie', iosIcon:'ios-pie', androidIcon:'md-pie' },
-			{ title: 'Diary',id : 'diary',show: false, component: 'Diary', iconName:'calendar', iosIcon:'ios-calendar', androidIcon:'md-calendar' },
+			// { title: 'Diary',id : 'diary',show: false, component: 'Diary', iconName:'calendar', iosIcon:'ios-calendar', androidIcon:'md-calendar' },
 			{ title: 'Customer',id : 'customer',show: true, component: 'Customer', iconName:'person', iosIcon:'ios-person', androidIcon:'md-person' },
 			{ title: 'Article',id : 'article',show: true, component: 'Article', iconName:'logo-dropbox', iosIcon:'logo-dropbox', androidIcon:'logo-dropbox' },
-			{ title: 'Lead',id : 'lead',show: false, component: 'Lead', iconName:'people', iosIcon:'ios-people', androidIcon:'md-people' },
-			{ title: 'Potential',id : 'potential',show: false, component: 'Potential', iconName:'trending-up', iosIcon:'ios-trending-up', androidIcon:'md-trending-up' },
-			{ title: 'Price List',id : 'pricelist',show: false, component: 'PriceList', iconName:'logo-usd', iosIcon:'logo-usd', androidIcon:'logo-usd' },
-			{ title: 'Merchandising',id : 'merchandising',show: false, component: 'Merchandising', iconName:'logo-markdown', iosIcon:'logo-markdown', androidIcon:'logo-markdown' },
-			{ title: 'Capture',id : 'capture',show: false, component: 'Capture', iconName:'checkbox-outline', iosIcon:'ios-checkbox-outline', androidIcon:'md-checkbox-outline' },
-			{ title: 'Stock Status',id : 'stock',show: false, component: 'StockStatus', iconName:'logo-buffer', iosIcon:'logo-buffer', androidIcon:'logo-buffer' },
-			{ title: 'Orders',id : 'order',show: false, component: 'Orders', iconName:'cart', iosIcon:'ios-cart', androidIcon:'md-cart' },
-			{ title: 'POD',id : 'pod',show: false, component: 'POD', iconName:'train', iosIcon:'ios-train', androidIcon:'md-train' },
-			{ title: 'Market Intelligence',id : 'marketintelligence',show: false, component: 'MarketIntelligence', iconName:'stats', iosIcon:'ios-stats', androidIcon:'md-stats' },
-			{ title: 'Market Plan',id : 'marketplan',show: false, component: 'MarketPlan', iconName:'globe', iosIcon:'ios-globe', androidIcon:'md-globe' },
+			// { title: 'Lead',id : 'lead',show: false, component: 'Lead', iconName:'people', iosIcon:'ios-people', androidIcon:'md-people' },
+			// { title: 'Potential',id : 'potential',show: false, component: 'Potential', iconName:'trending-up', iosIcon:'ios-trending-up', androidIcon:'md-trending-up' },
+			// { title: 'Price List',id : 'pricelist',show: false, component: 'PriceList', iconName:'logo-usd', iosIcon:'logo-usd', androidIcon:'logo-usd' },
+			// { title: 'Merchandising',id : 'merchandising',show: false, component: 'Merchandising', iconName:'logo-markdown', iosIcon:'logo-markdown', androidIcon:'logo-markdown' },
+			// { title: 'Capture',id : 'capture',show: false, component: 'Capture', iconName:'checkbox-outline', iosIcon:'ios-checkbox-outline', androidIcon:'md-checkbox-outline' },
+			// { title: 'Stock Status',id : 'stock',show: false, component: 'StockStatus', iconName:'logo-buffer', iosIcon:'logo-buffer', androidIcon:'logo-buffer' },
+			// { title: 'Orders',id : 'order',show: false, component: 'Orders', iconName:'cart', iosIcon:'ios-cart', androidIcon:'md-cart' },
+			// { title: 'POD',id : 'pod',show: false, component: 'POD', iconName:'train', iosIcon:'ios-train', androidIcon:'md-train' },
+			// { title: 'Market Intelligence',id : 'marketintelligence',show: false, component: 'MarketIntelligence', iconName:'stats', iosIcon:'ios-stats', androidIcon:'md-stats' },
+			// { title: 'Market Plan',id : 'marketplan',show: false, component: 'MarketPlan', iconName:'globe', iosIcon:'ios-globe', androidIcon:'md-globe' },
 			{ title: 'Settings',id : 'settings',show: false, component: 'Settings', iconName:'settings', iosIcon:'ios-settings', androidIcon:'md-settings' },
 			{ title: 'Sync',id : 'sync',show: true, component: 'SyncModal', iconName:'sync', iosIcon:'ios-sync', androidIcon:'md-sync' },
 			{ title: 'Change Password',id : 'changepassword',show: true, component: 'ChangePassword', iconName:'key', iosIcon:'ios-key', androidIcon:'md-key' },
@@ -111,8 +111,8 @@ export class MyApp {
 		// we wouldn't want the back button to show in this scenario
 		//this.nav.setRoot(page.component);
 		if(page.title == "Sync"){
-            let modal = this.modalCtrl.create(page.component);
-            modal.present();
+			let modal = this.modalCtrl.create(page.component);
+			modal.present();
 		}
 		else if(page.title == "Sign Off"){
 			this.nav.setRoot(page.component);

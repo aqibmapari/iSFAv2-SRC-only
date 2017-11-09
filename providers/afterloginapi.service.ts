@@ -21,6 +21,7 @@ export class AfterLoginAPIService {
             let action = '?action=DisplayVideoList&pernr='+this.pernr;
             this.apiRequestService.getAPI(this.ip+className+action).then((data) => {
                 console.log(JSON.stringify(data));
+                let batchArray = [];
                 for (var i = 0; i < data['videoList'].length; i++)
                 {
                     let v_id = this.utilService.encode64(data['videoList'][i]['v_id']);
@@ -29,18 +30,23 @@ export class AfterLoginAPIService {
                             var row = data['videoList'][results['index']];
                             var vid = this.utilService.encode64(row['v_id']);
                             var vidname = this.utilService.encode64(row['v_name']);
-                            this.databaseService.insertIntoTableQuery('dashboardvideomst',
-                            'vid,vidname,pernr',
-                            [vid,vidname,pernr],results['index'])
-                            .then((obj) => {
-                                console.log(JSON.stringify(obj));
-                            }, (err) => {
-                                console.log(JSON.stringify(err));
-                            });
+
+                            let tableName = 'dashboardvideomst';
+                            let columns = 'vid,vidname,pernr';
+                            let placeholders = this.databaseService._createPlaceHolder(columns);
+                            let params = [vid,vidname,pernr]
+                            batchArray.push(['INSERT OR REPLACE INTO '+tableName+' ('+columns+') VALUES( '+placeholders+')', params]);
+                            if(results['rows'].length-1 === results['index']){
+                                this.databaseService.executeBatchRequest(batchArray).then((obj) => {
+                                    resolve(true);
+                                }, (err) => {
+                                    console.error('Unable to execute sql: ', err);
+                                    reject(false);
+                                });
+                            }
                         }
                     },(err) => {});
                 }
-                resolve(true);
             }, (err) => {
                 console.log((err));
                 reject(false);
@@ -68,6 +74,7 @@ export class AfterLoginAPIService {
     insertIntoCustTabmstTable(data){
         let epernr = this.utilService.encode64(this.pernr);
         this.databaseService.deleteTableQuery('custtabmst',' where pernr=?',[epernr]).then((obj) => {},(err) => {});
+        let batchArray = [];
         for (var i = 0; i < data.length; i++)
         {
             var row = data[i];
@@ -84,19 +91,25 @@ export class AfterLoginAPIService {
             var customer = this.utilService.encode64(row.customer);
             var status = this.utilService.encode64(row.status);
 
-            this.databaseService.insertIntoTableQuery('custtabmst',
-            'pernr,branch,customergroup,customerclass,customerchain,popclass,industry,industrycode1,parentgroup,territorysalesgrp,customer,status',
-            [pernr,branch,customergroup,customerclass,customerchain,popclass,industry,industrycode1,parentgroup,territorysalesgrp,customer,status],i)
-            .then((obj) => {
-                console.log(JSON.stringify(obj));
-            }, (err) => {
-                console.log(JSON.stringify(err));
-            });
+            let tableName = 'custtabmst';
+            let columns = 'pernr,branch,customergroup,customerclass,customerchain,popclass,industry,industrycode1,parentgroup,territorysalesgrp,customer,status';
+            let placeholders = this.databaseService._createPlaceHolder(columns);
+            let params = [pernr,branch,customergroup,customerclass,customerchain,popclass,industry,industrycode1,parentgroup,territorysalesgrp,customer,status]
+            batchArray.push(['INSERT OR REPLACE INTO '+tableName+' ('+columns+') VALUES( '+placeholders+')', params]);
+
         }
+        this.databaseService.executeBatchRequest(batchArray).then((obj) => {
+            // resolve(true);
+        }, (err) => {
+            console.error('Unable to execute sql: ', err);
+            // reject(false);
+        });
+
     }
     insertIntoArticleTabmstTable(data){
         let epernr = this.utilService.encode64(this.pernr);
         this.databaseService.deleteTableQuery('articletabmst',' where pernr=?',[epernr]).then((obj) => {},(err) => {});
+        let batchArray = [];
         for (var i = 0; i < data.length; i++)
         {
             var row = data[i];
@@ -109,19 +122,23 @@ export class AfterLoginAPIService {
             var brand = this.utilService.encode64((row.brand));
             var segment = this.utilService.encode64(row.segment);
 
-            this.databaseService.insertIntoTableQuery('articletabmst',
-            'pernr,businessunit,producdivision,category,subcategory,principal,brand,segment',
-            [pernr,businessunit,producdivision,category,subcategory,principal,brand,segment],i)
-            .then((obj) => {
-                console.log(JSON.stringify(obj));
-            }, (err) => {
-                console.log(JSON.stringify(err));
-            });
+            let tableName = 'articletabmst';
+            let columns = 'pernr,businessunit,producdivision,category,subcategory,principal,brand,segment';
+            let placeholders = this.databaseService._createPlaceHolder(columns);
+            let params = [pernr,businessunit,producdivision,category,subcategory,principal,brand,segment]
+            batchArray.push(['INSERT OR REPLACE INTO '+tableName+' ('+columns+') VALUES( '+placeholders+')', params]);
         }
+        this.databaseService.executeBatchRequest(batchArray).then((obj) => {
+            // resolve(true);
+        }, (err) => {
+            console.error('Unable to execute sql: ', err);
+            // reject(false);
+        });
     }
     insertIntoServermstTable(data){
         // let epernr = this.utilService.encode64(this.pernr);
         this.databaseService.deleteTableQuery('servermst','',[]).then((obj) => {},(err) => {});
+        let batchArray = [];
         for (var i = 0; i < data.length; i++)
         {
             var row = data[i];
@@ -131,19 +148,24 @@ export class AfterLoginAPIService {
             var systemid = this.utilService.encode64(row.systemid);
             var router = this.utilService.encode64(row.router);
 
-            this.databaseService.insertIntoTableQuery('servermst',
-            'servername,Applicationserver,instance,systemid,router',
-            [servername,Applicationserver,instance,systemid,router],i)
-            .then((obj) => {
-                console.log(JSON.stringify(obj));
-            }, (err) => {
-                console.log(JSON.stringify(err));
-            });
+            let tableName = 'servermst';
+            let columns = 'servername,Applicationserver,instance,systemid,router';
+            let placeholders = this.databaseService._createPlaceHolder(columns);
+            let params = [servername,Applicationserver,instance,systemid,router]
+            batchArray.push(['INSERT OR REPLACE INTO '+tableName+' ('+columns+') VALUES( '+placeholders+')', params]);
+
         }
+        this.databaseService.executeBatchRequest(batchArray).then((obj) => {
+            // resolve(true);
+        }, (err) => {
+            console.error('Unable to execute sql: ', err);
+            // reject(false);
+        });
     }
     insertIntoDefaultsTable(data){
         let epernr = this.utilService.encode64(this.pernr);
         this.databaseService.deleteTableQuery('defaults',' where pernr=?',[epernr]).then((obj) => {},(err) => {});
+        let batchArray = [];
         for (var i = 0; i < data.length; i++)
         {
             var row = data[i];
@@ -151,15 +173,19 @@ export class AfterLoginAPIService {
             var id = this.utilService.encode64(row.id);
             var subtyp = this.utilService.encode64(row.subtyp);
 
-            this.databaseService.insertIntoTableQuery('defaults',
-            'pernr,id,subtyp',
-            [pernr,id,subtyp],i)
-            .then((obj) => {
-                console.log(JSON.stringify(obj));
-            }, (err) => {
-                console.log(JSON.stringify(err));
-            });
+            let tableName = 'defaults';
+            let columns = 'pernr,id,subtyp';
+            let placeholders = this.databaseService._createPlaceHolder(columns);
+            let params = [pernr,id,subtyp]
+            batchArray.push(['INSERT OR REPLACE INTO '+tableName+' ('+columns+') VALUES( '+placeholders+')', params]);
+
         }
+        this.databaseService.executeBatchRequest(batchArray).then((obj) => {
+            // resolve(true);
+        }, (err) => {
+            console.error('Unable to execute sql: ', err);
+            // reject(false);
+        });
     }
   	callParameters(){
         return new Promise((resolve, reject) => {
@@ -179,6 +205,7 @@ export class AfterLoginAPIService {
     insertIntoParametersTable(data){
         // let epernr = this.utilService.encode64(this.pernr);
         this.databaseService.deleteTableQuery('parametermst','',[]).then((obj) => {},(err) => {});
+        let batchArray = [];
         for (var i = 0; i < data.length; i++)
         {
             var row = data[i];
@@ -186,15 +213,19 @@ export class AfterLoginAPIService {
             var parameter = this.utilService.encode64(row.parameter);
             var value = this.utilService.encode64(row.value);
 
-            this.databaseService.insertIntoTableQuery('parametermst',
-            'parameter,value',
-            [parameter,value],i)
-            .then((obj) => {
-                console.log(JSON.stringify(obj));
-            }, (err) => {
-                console.log(JSON.stringify(err));
-            });
+            let tableName = 'parametermst';
+            let columns = 'parameter,value';
+            let placeholders = this.databaseService._createPlaceHolder(columns);
+            let params = [parameter,value]
+            batchArray.push(['INSERT OR REPLACE INTO '+tableName+' ('+columns+') VALUES( '+placeholders+')', params]);
+
         }
+        this.databaseService.executeBatchRequest(batchArray).then((obj) => {
+            // resolve(true);
+        }, (err) => {
+            console.error('Unable to execute sql: ', err);
+            // reject(false);
+        });
     }
   	callMenuParameters(){
         return new Promise((resolve, reject) => {
@@ -214,6 +245,7 @@ export class AfterLoginAPIService {
     insertIntoUserMenuTable(data){
         let pernr = this.utilService.encode64(this.pernr);
         this.databaseService.deleteTableQuery('usermenumst',' where pernr=?',[pernr]).then((obj) => {},(err) => {});
+        let batchArray = [];
         for (var i = 0; i < data.length; i++)
         {
             var row = data[i];
@@ -222,14 +254,18 @@ export class AfterLoginAPIService {
             var submenu = this.utilService.encode64(row.submenu.toLowerCase());
             var flag = this.utilService.encode64(row.flag);
 
-            this.databaseService.insertIntoTableQuery('usermenumst',
-            'pernr,menu,submenu,flag',
-            [pernr,menu,submenu,flag],i)
-            .then((obj) => {
-                console.log(JSON.stringify(obj));
-            }, (err) => {
-                console.log(JSON.stringify(err));
-            });
+            let tableName = 'usermenumst';
+            let columns = 'pernr,menu,submenu,flag';
+            let placeholders = this.databaseService._createPlaceHolder(columns);
+            let params = [pernr,menu,submenu,flag]
+            batchArray.push(['INSERT OR REPLACE INTO '+tableName+' ('+columns+') VALUES( '+placeholders+')', params]);
+
         }
+        this.databaseService.executeBatchRequest(batchArray).then((obj) => {
+            // resolve(true);
+        }, (err) => {
+            console.error('Unable to execute sql: ', err);
+            // reject(false);
+        });
     }
 }

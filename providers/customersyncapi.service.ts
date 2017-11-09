@@ -38,6 +38,7 @@ export class CustomerSyncAPIService {
                 resolve(true);
             }
             else{
+                let batchArray = [];
                 for (var i = 0; i < _len; i++)
                 {
                     var row = data['customermst'][i];
@@ -69,18 +70,21 @@ export class CustomerSyncAPIService {
                     var billto = this.utilService.encode64(row.billto==''?row.kunnr:row.billto);
                     var type = this.utilService.encode64('c');//this.utilService.encode64(row.type.trim().toLowerCase());
 
-                    this.databaseService.insertIntoTableQuery('customermst',
-                    'typeid,pernr,kunnr,name1,address,custclass,branch,chain,popclass,custgrp,custstatus,custtype,latitude,longitude,'+
-                    'abcclass,city,channeltype1,channeltype2,territory,parentgroup,outletname,website,zterm,emailid,cflag,type,billto',
-                    [typeid,pernr,kunnr,name1,address,custclass,branch,chain,popclass,custgrp,custstatus,custtype,latitude,longitude,
-                    abcclass,city,channeltype1,channeltype2,territory,parentgroup,outletname,website,zterm,emailid,cflag,type,billto],i)
-                    .then((resobj) => {
-                        console.log(JSON.stringify(resobj));
-                    }, (err) => {
-                        console.log(JSON.stringify(err));
-                    });
-                    if(i == _len-1) this.insertCustomers(link, row['typeid'], resolve, reject);
+                    let tableName = 'customermst';
+                    let columns = 'typeid,pernr,kunnr,name1,address,custclass,branch,chain,popclass,custgrp,custstatus,custtype,latitude,longitude,'+
+                    'abcclass,city,channeltype1,channeltype2,territory,parentgroup,outletname,website,zterm,emailid,cflag,type,billto';
+                    let placeholders = this.databaseService._createPlaceHolder(columns);
+                    let params = [typeid,pernr,kunnr,name1,address,custclass,branch,chain,popclass,custgrp,custstatus,custtype,latitude,longitude,
+                        abcclass,city,channeltype1,channeltype2,territory,parentgroup,outletname,website,zterm,emailid,cflag,type,billto]
+                    batchArray.push(['INSERT OR REPLACE INTO '+tableName+' ('+columns+') VALUES( '+placeholders+')', params]);
+
                 }
+                this.databaseService.executeBatchRequest(batchArray).then((obj) => {
+                    this.insertCustomers(link, data['customermst'][_len-1]['typeid'], resolve, reject);
+                }, (err) => {
+                    console.error('Unable to execute sql: ', err);
+                    // reject(false);
+                });
             }
 
         }, (err) => {
@@ -131,6 +135,7 @@ export class CustomerSyncAPIService {
                 resolve(obj);
             }
             else{
+                let batchArray = [];
                 for (var i = 0; i < _len; i++)
                 {
                     var row = data[i];
@@ -155,7 +160,20 @@ export class CustomerSyncAPIService {
                         console.log(JSON.stringify(err));
                     });
                     if(i == _len-1) {obj.typeid = row['typeid'] ;resolve(obj)};
+
+                    let tableName = 'custcreditmst';
+                    let columns = 'kunnr, invno,invdate,invamount,amountrec,date,balance,duedate,invdatetime,pernr';
+                    let placeholders = this.databaseService._createPlaceHolder(columns);
+                    let params = [kunnr, invno,invdate,invamount,amountrec,date,balance,duedate,invdatetime,pernr]
+                    batchArray.push(['INSERT OR REPLACE INTO '+tableName+' ('+columns+') VALUES( '+placeholders+')', params]);
+
                 }
+                this.databaseService.executeBatchRequest(batchArray).then((obj) => {
+                    obj.typeid = data[_len-1]['typeid'] ;resolve(obj)
+                }, (err) => {
+                    console.error('Unable to execute sql: ', err);
+                    // reject(false);
+                });
             }
         });
     }
@@ -169,6 +187,7 @@ export class CustomerSyncAPIService {
                 resolve(obj);
             }
             else{
+                let batchArray = [];
                 for (var i = 0; i < _len; i++)
                 {
                     var row = data[i];
@@ -178,16 +197,19 @@ export class CustomerSyncAPIService {
                     var used = this.utilService.encode64((row.used));
                     var receivable = this.utilService.encode64(row.receivable);
 
-                    this.databaseService.insertIntoTableQuery('custcreditlimitmst',
-                    'kunnr,pernr,creditlimit,used,receivable',
-                    [kunnr,pernr,creditlimit,used,receivable],i)
-                    .then((resobj) => {
-                         console.log('custcreditlimitmst '+JSON.stringify(resobj));
-                    }, (err) => {
-                        console.log(JSON.stringify(err));
-                    });
-                    if(i == _len-1) {obj.typeid = row['typeid'] ;resolve(obj)};
+                    let tableName = 'custcreditlimitmst';
+                    let columns = 'kunnr,pernr,creditlimit,used,receivable';
+                    let placeholders = this.databaseService._createPlaceHolder(columns);
+                    let params = [kunnr,pernr,creditlimit,used,receivable]
+                    batchArray.push(['INSERT OR REPLACE INTO '+tableName+' ('+columns+') VALUES( '+placeholders+')', params]);
+
                 }
+                this.databaseService.executeBatchRequest(batchArray).then((obj) => {
+                    obj.typeid = data[_len-1]['typeid'] ;resolve(obj)
+                }, (err) => {
+                    console.error('Unable to execute sql: ', err);
+                    // reject(false);
+                });
             }
         });
     }
@@ -234,6 +256,7 @@ export class CustomerSyncAPIService {
                 resolve(obj);
             }
             else{
+                let batchArray = [];
                 for (var i = 0; i < _len; i++)
                 {
                     var row = data[i];
@@ -247,16 +270,19 @@ export class CustomerSyncAPIService {
                     var orderqty = this.utilService.encode64((row.kwmeng));
                     var delqty = this.utilService.encode64(row.rfmng);
 
-                    this.databaseService.insertIntoTableQuery('sodetailsmst',
-                    'kunnr,vbeln,sodate,vbelni,invdate,ponumber,orderqty,delqty,pernr',
-                    [kunnr,vbeln,sodate,vbelni,invdate,ponumber,orderqty,delqty,pernr],i)
-                    .then((resobj) => {
-                         console.log('sodetailsmst '+JSON.stringify(resobj));
-                    }, (err) => {
-                        console.log(JSON.stringify(err));
-                    });
-                    if(i == _len-1) {obj.typeid = row['typeid'] ;resolve(obj)};
+                    let tableName = 'sodetailsmst';
+                    let columns = 'kunnr,vbeln,sodate,vbelni,invdate,ponumber,orderqty,delqty,pernr';
+                    let placeholders = this.databaseService._createPlaceHolder(columns);
+                    let params = [kunnr,vbeln,sodate,vbelni,invdate,ponumber,orderqty,delqty,pernr]
+                    batchArray.push(['INSERT OR REPLACE INTO '+tableName+' ('+columns+') VALUES( '+placeholders+')', params]);
+
                 }
+                this.databaseService.executeBatchRequest(batchArray).then((obj) => {
+                    obj.typeid = data[_len-1]['typeid'] ;resolve(obj)
+                }, (err) => {
+                    console.error('Unable to execute sql: ', err);
+                    // reject(false);
+                });
             }
         });
     }
@@ -270,6 +296,7 @@ export class CustomerSyncAPIService {
                 resolve(obj);
             }
             else{
+                let batchArray = [];
                 for (var i = 0; i < _len; i++)
                 {
                     var row = data[i];
@@ -285,16 +312,19 @@ export class CustomerSyncAPIService {
                     var recqty = this.utilService.encode64(row.recqty);
                     var podstatus = this.utilService.encode64("null");
 
-                    this.databaseService.insertIntoTableQuery('invdetailsmst',
-                    'vbelnf, vbelni,matnr,qtyuom,invdate,qty,maktx,recqty,podstatus,netwr,pernr',
-                    [vbelnf, vbelni,matnr,qtyuom,invdate,qty,maktx,recqty,podstatus,netwr,pernr],i)
-                    .then((resobj) => {
-                         console.log('invdetailsmst '+JSON.stringify(resobj));
-                    }, (err) => {
-                        console.log(JSON.stringify(err));
-                    });
-                    if(i == _len-1) {obj.typeid = row['typeid'] ;resolve(obj)};
+                    let tableName = 'invdetailsmst';
+                    let columns = 'vbelnf, vbelni,matnr,qtyuom,invdate,qty,maktx,recqty,podstatus,netwr,pernr';
+                    let placeholders = this.databaseService._createPlaceHolder(columns);
+                    let params = [vbelnf, vbelni,matnr,qtyuom,invdate,qty,maktx,recqty,podstatus,netwr,pernr]
+                    batchArray.push(['INSERT OR REPLACE INTO '+tableName+' ('+columns+') VALUES( '+placeholders+')', params]);
+
                 }
+                this.databaseService.executeBatchRequest(batchArray).then((obj) => {
+                    obj.typeid = data[_len-1]['typeid'] ;resolve(obj)
+                }, (err) => {
+                    console.error('Unable to execute sql: ', err);
+                    // reject(false);
+                });
             }
         });
     }
@@ -310,7 +340,7 @@ export class CustomerSyncAPIService {
   	}
     InsertIntoCustomerContact(link, lasttypeid, resolve, reject){
         // console.log(resolve);
-        link = 'http://212.118.101.174:8081/bsalesfs/GetCustomerContactDetails.do';
+        // link = 'http://212.118.101.174:8081/bsalesfs/GetCustomerContactDetails.do';
         let action = '?pernr='+this.pernr+'&typeid='+lasttypeid;
         this.apiRequestService.getAPI(link+action).then((data) => {
             // console.log(JSON.stringify(data));
@@ -321,6 +351,7 @@ export class CustomerSyncAPIService {
                 resolve(true);
             }
             else{
+                let batchArray = [];
                 for (var i = 0; i < _len; i++)
                 {
                     var row = data['customercontactmst'][i];
@@ -337,16 +368,19 @@ export class CustomerSyncAPIService {
                     var datetime = (row.datetime);
                     var sendflag = this.utilService.encode64('N');
 
-                    this.databaseService.insertIntoTableQuery('customercontactmst',
-                    'typeid,kunnr, name,designation,mobileno,emailid,photo,pernr,tel,fax,sendflag,datetime',
-                    [typeid,kunnr, name,designation,mobileno,emailid,photo,pernr,tel,fax,sendflag,datetime],i)
-                    .then((resobj) => {
-                        console.log('customercontactmst '+JSON.stringify(resobj));
-                    }, (err) => {
-                        console.log(JSON.stringify(err));
-                    });
-                    if(i == _len-1) this.InsertIntoCustomerContact(link, row['typeid'], resolve, reject);
+                    let tableName = 'customercontactmst';
+                    let columns = 'typeid,kunnr, name,designation,mobileno,emailid,photo,pernr,tel,fax,sendflag,datetime';
+                    let placeholders = this.databaseService._createPlaceHolder(columns);
+                    let params = [typeid,kunnr, name,designation,mobileno,emailid,photo,pernr,tel,fax,sendflag,datetime]
+                    batchArray.push(['INSERT OR REPLACE INTO '+tableName+' ('+columns+') VALUES( '+placeholders+')', params]);
+
                 }
+                this.databaseService.executeBatchRequest(batchArray).then((obj) => {
+                    this.InsertIntoCustomerContact(link, data['customercontactmst'][_len-1]['typeid'], resolve, reject);
+                }, (err) => {
+                    console.error('Unable to execute sql: ', err);
+                    // reject(false);
+                });
             }
 
         }, (err) => {
@@ -398,6 +432,7 @@ export class CustomerSyncAPIService {
                 resolve(obj);
             }
             else{
+                let batchArray = [];
                 for (var i = 0; i < _len; i++)
                 {
                     var selrow = data[i];
@@ -416,28 +451,31 @@ export class CustomerSyncAPIService {
                         var statusid = this.utilService.encode64(row.status);
 
                         if(resobj['rows'].length != 0){
-                            this.databaseService.updateTableQuery('custassetsmst',
-                            'typeid=?, kunnr=?, asset=?, instdate=?,location=?,statusid=?',
-                            'WHERE serialno=? and pernr= ?',
-                            [typeid, kunnr, asset, instdate,location,statusid,serialno,pernr],i)
-                            .then((resobj) => {
-                                 console.log('custassetsmst '+JSON.stringify(resobj));
-                            }, (err) => {
-                                console.log(JSON.stringify(err));
-                            });
+                            let tableName = 'custassetsmst';
+                            let columns = 'typeid=?, kunnr=?, asset=?, instdate=?,location=?,statusid=? WHERE serialno=? and pernr= ?';
+                            let params = [typeid, kunnr, asset, instdate,location,statusid,serialno,pernr]
+                            batchArray.push(['UPDATE '+tableName+' SET '+columns, params]);
+
                         }
                         else{
-                            this.databaseService.insertIntoTableQuery('custassetsmst',
-                            'typeid, kunnr, asset, instdate,location,statusid, serialno,pernr',
-                            [typeid, kunnr, asset, instdate,location,statusid, serialno,pernr],i)
-                            .then((resobj) => {
-                                 console.log('custassetsmst '+JSON.stringify(resobj));
+                            let tableName = 'custassetsmst';
+                            let columns = 'typeid, kunnr, asset, instdate,location,statusid, serialno,pernr';
+                            let placeholders = this.databaseService._createPlaceHolder(columns);
+                            let params = [typeid, kunnr, asset, instdate,location,statusid, serialno,pernr]
+                            batchArray.push(['INSERT OR REPLACE INTO '+tableName+' ('+columns+') VALUES( '+placeholders+')', params]);
+
+                        }
+                        if(_len - 1 === resobj['index']){
+                            this.databaseService.executeBatchRequest(batchArray).then((obj) => {
+                                obj.typeid = data[_len-1]['typeid'] ;resolve(obj)
                             }, (err) => {
-                                console.log(JSON.stringify(err));
+                                console.error('Unable to execute sql: ', err);
+                                // reject(false);
                             });
                         }
-                        if(index == _len-1) {obj.typeid = row['typeid'] ;resolve(obj)};
                     },(err) => {});
+
+
                 }
             }
         });
@@ -452,6 +490,7 @@ export class CustomerSyncAPIService {
                 resolve(obj);
             }
             else{
+                let batchArray = [];
                 for (var i = 0; i < _len; i++)
                 {
                     var row = data[i];
@@ -459,16 +498,19 @@ export class CustomerSyncAPIService {
                     var typeid = this.utilService.encode64(row.typeid);
                     var value = this.utilService.encode64(row.value);
 
-                    this.databaseService.insertIntoTableQuery('assetmst',
-                    'typeid, value,pernr',
-                    [typeid, value,pernr],i)
-                    .then((resobj) => {
-                         console.log('assetmst '+JSON.stringify(resobj));
-                    }, (err) => {
-                        console.log(JSON.stringify(err));
-                    });
-                    if(i == _len-1) {obj.typeid = row['typeid'] ;resolve(obj)};
+                    let tableName = 'assetmst';
+                    let columns = 'typeid, value,pernr';
+                    let placeholders = this.databaseService._createPlaceHolder(columns);
+                    let params = [typeid, value,pernr]
+                    batchArray.push(['INSERT OR REPLACE INTO '+tableName+' ('+columns+') VALUES( '+placeholders+')', params]);
+
                 }
+                this.databaseService.executeBatchRequest(batchArray).then((obj) => {
+                    obj.typeid = data[_len-1]['typeid'] ;resolve(obj)
+                }, (err) => {
+                    console.error('Unable to execute sql: ', err);
+                    // reject(false);
+                });
             }
         });
     }
@@ -483,6 +525,7 @@ export class CustomerSyncAPIService {
                     resolve(obj);
                 }
                 else{
+                    let batchArray = [];
                     for (var i = 0; i < _len; i++)
                     {
                         var row = data[i];
@@ -490,16 +533,19 @@ export class CustomerSyncAPIService {
                         var typeid = this.utilService.encode64(row.typeid);
                         var status = this.utilService.encode64(row.status);
 
-                        this.databaseService.insertIntoTableQuery('custassetstatusmst',
-                        'typeid, status,pernr',
-                        [typeid, status,pernr],i)
-                        .then((resobj) => {
-                            console.log('custassetstatusmst '+JSON.stringify(resobj));
-                        }, (err) => {
-                            console.log(JSON.stringify(err));
-                        });
-                        if(i == _len-1) {obj.isLast = true; resolve(obj);}
+                        let tableName = 'custassetstatusmst';
+                        let columns = 'typeid, status,pernr';
+                        let placeholders = this.databaseService._createPlaceHolder(columns);
+                        let params = [typeid, status,pernr]
+                        batchArray.push(['INSERT OR REPLACE INTO '+tableName+' ('+columns+') VALUES( '+placeholders+')', params]);
+
                     }
+                    this.databaseService.executeBatchRequest(batchArray).then((obj) => {
+                        obj.typeid = data[_len-1]['typeid'] ;resolve(obj)
+                    }, (err) => {
+                        console.error('Unable to execute sql: ', err);
+                        // reject(false);
+                    });
                 }
             }
             else{

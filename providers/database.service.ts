@@ -57,7 +57,6 @@ export class DatabaseService {
 		{
 			return this.db.sqlBatch(batchArray)
 		}
-
 	}
 	insertIntoTableQuery(tableName,columns,params,index){
 		console.log((new Date().getTime()+" insertIntoTableQuery1"));
