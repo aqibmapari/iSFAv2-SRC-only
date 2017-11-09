@@ -38,8 +38,9 @@ ngOnInit() {
       let ip = this.sharedService.getIP();
       let className = this.sharedService.getAPIObj('user');
       this.apiRequestService.getAPI(ip+className).then((data) => {
-          console.log((data));
+          console.log((new Date()+" "+data));
           this.databaseService.deleteTableQuery('empdetails','',[]).then((obj) => {},(err) => {});
+          let batchArray = [];
           for (var i = 0; i < data['empdetails'].length; i++)
           {
               var row = data['empdetails'][i];
@@ -60,16 +61,28 @@ ngOnInit() {
             var grp = this.utilService.encode64(row.group);
             var server = this.utilService.encode64(row.server);
 
-              this.databaseService.insertIntoTableQuery('empdetails',
-              'pernr,nachn,vorna,role,password, roledesc,reportto,emailid,designation,status,imei,simno,cleardata,grp,server',
-              [pernr,nachn,vorna,role,password, roledesc,reportto,emailid,designation,status,imei,simno,cleardata,grp,server],i)
-              .then((obj) => {
-                  console.log(JSON.stringify(obj));
-              }, (err) => {
-                  console.log(JSON.stringify(err));
-              });
+            let tableName = 'empdetails';
+            let columns = 'pernr,nachn,vorna,role,password, roledesc,reportto,emailid,designation,status,imei,simno,cleardata,grp,server';
+            let placeholders = this.databaseService._createPlaceHolder(columns);
+            let params = [pernr,nachn,vorna,role,password, roledesc,reportto,emailid,designation,status,imei,simno,cleardata,grp,server]
+            batchArray.push(['INSERT OR REPLACE INTO '+tableName+' ('+columns+') VALUES( '+placeholders+')', params]);
+            //   this.databaseService.insertIntoTableQuery('empdetails',
+            //   'pernr,nachn,vorna,role,password, roledesc,reportto,emailid,designation,status,imei,simno,cleardata,grp,server',
+            //   [pernr,nachn,vorna,role,password, roledesc,reportto,emailid,designation,status,imei,simno,cleardata,grp,server],i)
+            //   .then((obj) => {
+            //     console.log((new Date().getTime()+" empdetailsinserted"));
+            //     console.log(JSON.stringify(obj));
+            //   }, (err) => {
+            //       console.log(JSON.stringify(err));
+            //   });
           }
-          this.apiRequestService.dismissLoader();
+          this.databaseService.executeBatchRequest(batchArray).then((obj) => {
+            console.log((new Date()+" empdetailsinserted"));
+            console.log(JSON.stringify(obj));
+            this.apiRequestService.dismissLoader();
+        }, (err) => {
+            console.error('Unable to execute sql: ', err);
+        });
       }, (err) => {
           console.log((err));
           this.apiRequestService.dismissLoader();

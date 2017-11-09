@@ -16,6 +16,7 @@ export class CustomerSyncAPIService {
         this.ip = this.sharedService.getIP();
     }
   	callCustomer(lasttypeid){
+        this.apiRequestService.updateLoaderContent("Getting Customer Master");
         return new Promise((resolve, reject) => {
             this.pernr = this.sharedService.getPernr();
             let className = this.sharedService.getAPIObj('customers');
@@ -88,6 +89,7 @@ export class CustomerSyncAPIService {
         });
     }
   	callCustCredit(typeid1,typeid2){
+        this.apiRequestService.updateLoaderContent("Getting Customer Credit Details");
         return new Promise((resolve, reject) => {
             this.pernr = this.sharedService.getPernr();
             let className = this.sharedService.getAPIObj('credit');
@@ -190,6 +192,7 @@ export class CustomerSyncAPIService {
         });
     }
   	callCustSOInvDetails(typeid1,typeid2){
+        this.apiRequestService.updateLoaderContent("Getting Customer ERP Order Details");
         return new Promise((resolve, reject) => {
             this.pernr = this.sharedService.getPernr();
             let className = this.sharedService.getAPIObj('sodetails');
@@ -296,6 +299,7 @@ export class CustomerSyncAPIService {
         });
     }
     callCustomerContact(lasttypeid){
+        this.apiRequestService.updateLoaderContent("Getting Customer Contact Details");
         return new Promise((resolve, reject) => {
             this.pernr = this.sharedService.getPernr();
             let className = this.sharedService.getAPIObj('custcontact');

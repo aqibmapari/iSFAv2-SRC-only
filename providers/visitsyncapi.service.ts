@@ -17,6 +17,7 @@ export class VisitSyncAPIService {
         this.ip = this.sharedService.getIP();
     }
   	callVisitPJP(){
+        this.apiRequestService.updateLoaderContent("Getting Visit Master");
         return new Promise((resolve, reject) => {
             this.pernr = this.sharedService.getPernr();
             let className = this.sharedService.getAPIObj('visitpjp');

@@ -49,19 +49,29 @@ export class DatabaseService {
 		});
 
 	}
+	executeBatchRequest(batchArray){
+		if(!this.sharedService.getIsApp()){
+			return new Promise((resolve, reject) => {resolve('success')}); // test ionic serve
+		}
+		else
+		{
+			return this.db.sqlBatch(batchArray)
+		}
+
+	}
 	insertIntoTableQuery(tableName,columns,params,index){
+		console.log((new Date().getTime()+" insertIntoTableQuery1"));
 		return new Promise((resolve, reject) => {
+			console.log((new Date().getTime()+" insertIntoTableQuery2"));
 			if(!this.sharedService.getIsApp()){
 				resolve('success'); // test ionic serve
 			}
 			else{
-				let placeholders = '?';
-				let _length = columns.split(',').length;
-				for(var i=0; i<_length-1; i++){
-					placeholders += ',?';
-				}
+				let placeholders =this._createPlaceHolder(columns);
+				console.log((new Date().getTime()+" insertIntoTableQuery3"));
 				this.db.executeSql('INSERT OR REPLACE INTO '+tableName+' ('+columns+') VALUES( '+placeholders+')', params).then((data) => {
 					data['index'] = index;
+					console.log((new Date().getTime()+" insertIntoTableQuery4"));
 					resolve(data);
 				}, (err) => {
 					console.error('Unable to execute sql: ', err);
@@ -71,6 +81,14 @@ export class DatabaseService {
 
 		});
 
+	}
+	_createPlaceHolder(columns){
+		let placeholders = '?';
+		let _length = columns.split(',').length;
+		for(var i=0; i<_length-1; i++){
+			placeholders += ',?';
+		}
+		return placeholders;
 	}
 	selectTableQuery(tableName,columns,whereClause,params,index){
 		return new Promise((resolve, reject) => {
