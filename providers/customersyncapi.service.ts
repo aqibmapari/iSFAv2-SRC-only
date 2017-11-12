@@ -79,7 +79,7 @@ export class CustomerSyncAPIService {
                     batchArray.push(['INSERT OR REPLACE INTO '+tableName+' ('+columns+') VALUES( '+placeholders+')', params]);
 
                 }
-                this.databaseService.executeBatchRequest(batchArray).then((obj) => {
+                this.databaseService.executeBatchRequest(batchArray).then((bResObj) => {
                     this.insertCustomers(link, data['customermst'][_len-1]['typeid'], resolve, reject);
                 }, (err) => {
                     console.error('Unable to execute sql: ', err);
@@ -151,16 +151,6 @@ export class CustomerSyncAPIService {
                     var duedate = (row.duedate);
                     var balance = this.utilService.encode64(row.balance);
 
-                    this.databaseService.insertIntoTableQuery('custcreditmst',
-                    'kunnr, invno,invdate,invamount,amountrec,date,balance,duedate,invdatetime,pernr',
-                    [kunnr, invno,invdate,invamount,amountrec,date,balance,duedate,invdatetime,pernr],i)
-                    .then((resobj) => {
-                         console.log('custcreditmst '+JSON.stringify(resobj));
-                    }, (err) => {
-                        console.log(JSON.stringify(err));
-                    });
-                    if(i == _len-1) {obj.typeid = row['typeid'] ;resolve(obj)};
-
                     let tableName = 'custcreditmst';
                     let columns = 'kunnr, invno,invdate,invamount,amountrec,date,balance,duedate,invdatetime,pernr';
                     let placeholders = this.databaseService._createPlaceHolder(columns);
@@ -168,7 +158,7 @@ export class CustomerSyncAPIService {
                     batchArray.push(['INSERT OR REPLACE INTO '+tableName+' ('+columns+') VALUES( '+placeholders+')', params]);
 
                 }
-                this.databaseService.executeBatchRequest(batchArray).then((obj) => {
+                this.databaseService.executeBatchRequest(batchArray).then((bResObj) => {
                     obj.typeid = data[_len-1]['typeid'] ;resolve(obj)
                 }, (err) => {
                     console.error('Unable to execute sql: ', err);
@@ -204,7 +194,7 @@ export class CustomerSyncAPIService {
                     batchArray.push(['INSERT OR REPLACE INTO '+tableName+' ('+columns+') VALUES( '+placeholders+')', params]);
 
                 }
-                this.databaseService.executeBatchRequest(batchArray).then((obj) => {
+                this.databaseService.executeBatchRequest(batchArray).then((bResObj) => {
                     obj.typeid = data[_len-1]['typeid'] ;resolve(obj)
                 }, (err) => {
                     console.error('Unable to execute sql: ', err);
@@ -277,7 +267,7 @@ export class CustomerSyncAPIService {
                     batchArray.push(['INSERT OR REPLACE INTO '+tableName+' ('+columns+') VALUES( '+placeholders+')', params]);
 
                 }
-                this.databaseService.executeBatchRequest(batchArray).then((obj) => {
+                this.databaseService.executeBatchRequest(batchArray).then((bResObj) => {
                     obj.typeid = data[_len-1]['typeid'] ;resolve(obj)
                 }, (err) => {
                     console.error('Unable to execute sql: ', err);
@@ -319,7 +309,7 @@ export class CustomerSyncAPIService {
                     batchArray.push(['INSERT OR REPLACE INTO '+tableName+' ('+columns+') VALUES( '+placeholders+')', params]);
 
                 }
-                this.databaseService.executeBatchRequest(batchArray).then((obj) => {
+                this.databaseService.executeBatchRequest(batchArray).then((bResObj) => {
                     obj.typeid = data[_len-1]['typeid'] ;resolve(obj)
                 }, (err) => {
                     console.error('Unable to execute sql: ', err);
@@ -375,7 +365,7 @@ export class CustomerSyncAPIService {
                     batchArray.push(['INSERT OR REPLACE INTO '+tableName+' ('+columns+') VALUES( '+placeholders+')', params]);
 
                 }
-                this.databaseService.executeBatchRequest(batchArray).then((obj) => {
+                this.databaseService.executeBatchRequest(batchArray).then((bResObj) => {
                     this.InsertIntoCustomerContact(link, data['customercontactmst'][_len-1]['typeid'], resolve, reject);
                 }, (err) => {
                     console.error('Unable to execute sql: ', err);
@@ -466,7 +456,7 @@ export class CustomerSyncAPIService {
 
                         }
                         if(_len - 1 === resobj['index']){
-                            this.databaseService.executeBatchRequest(batchArray).then((obj) => {
+                            this.databaseService.executeBatchRequest(batchArray).then((bResObj) => {
                                 obj.typeid = data[_len-1]['typeid'] ;resolve(obj)
                             }, (err) => {
                                 console.error('Unable to execute sql: ', err);
@@ -505,7 +495,7 @@ export class CustomerSyncAPIService {
                     batchArray.push(['INSERT OR REPLACE INTO '+tableName+' ('+columns+') VALUES( '+placeholders+')', params]);
 
                 }
-                this.databaseService.executeBatchRequest(batchArray).then((obj) => {
+                this.databaseService.executeBatchRequest(batchArray).then((bResObj) => {
                     obj.typeid = data[_len-1]['typeid'] ;resolve(obj)
                 }, (err) => {
                     console.error('Unable to execute sql: ', err);
@@ -540,7 +530,7 @@ export class CustomerSyncAPIService {
                         batchArray.push(['INSERT OR REPLACE INTO '+tableName+' ('+columns+') VALUES( '+placeholders+')', params]);
 
                     }
-                    this.databaseService.executeBatchRequest(batchArray).then((obj) => {
+                    this.databaseService.executeBatchRequest(batchArray).then((bResObj) => {
                         obj.typeid = data[_len-1]['typeid'] ;resolve(obj)
                     }, (err) => {
                         console.error('Unable to execute sql: ', err);

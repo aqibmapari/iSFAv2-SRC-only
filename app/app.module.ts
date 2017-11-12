@@ -5,6 +5,9 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SQLite } from '@ionic-native/sqlite';
 import { HttpModule } from '@angular/http';
+import { GoogleMaps } from "@ionic-native/google-maps";
+import { Geolocation } from '@ionic-native/geolocation';
+import { LocationAccuracy } from '@ionic-native/location-accuracy';
 import { MyApp } from './app.component';
 import { SpotifyProvider } from '../providers/spotify/spotify';
 
@@ -31,6 +34,9 @@ import {VisitSyncAPIService} from '../providers/visitsyncapi.service';
     StatusBar,
     SplashScreen,
     SQLite,
+    GoogleMaps,
+    Geolocation,
+    LocationAccuracy,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     SpotifyProvider,
     SharedService,
@@ -41,7 +47,7 @@ import {VisitSyncAPIService} from '../providers/visitsyncapi.service';
     CreateAllTablesService,
     MasterSyncAPIService,
     CustomerSyncAPIService,
-    VisitSyncAPIService
+    VisitSyncAPIService,
   ]
 })
 export class AppModule {}

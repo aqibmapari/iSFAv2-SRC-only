@@ -2,7 +2,7 @@
 
 How to use this
 ```
-npm install -g cordova ionic 
+npm install -g cordova ionic
 ```
 This will install latest ionic/cordova CLI
 
@@ -13,7 +13,7 @@ ionic start iSFAv2 sidemenu
 
 Delete all files and folder under src folder.
 Copy and paste all the above files in src folder of the newly created project.
- 
+
 Install the required npm modules
 
 ```
@@ -31,4 +31,13 @@ npm install --save @ionic-native/device
 
 ionic cordova plugin add cordova-sqlite-storage
 npm install --save @ionic-native/sqlite
+
+ionic cordova plugin add cordova-plugin-googlemaps --variable API_KEY_FOR_ANDROID="ANDROID_API_KEY" --variable API_KEY_FOR_IOS="iOS_API_KEY"
+npm install --save @ionic-native/google-maps
+
+ionic cordova plugin add cordova-plugin-geolocation --variable GEOLOCATION_USAGE_DESCRIPTION="To locate you"
+npm install --save @ionic-native/geolocation
+
+ionic cordova plugin add cordova-plugin-request-location-accuracy
+npm install --save @ionic-native/location-accuracy
 ```

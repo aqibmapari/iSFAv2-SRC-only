@@ -36,6 +36,7 @@ export class MasterSyncAPIService {
                 resolve(true);
             }
             else{
+                let batchArray = [];
                 for (var i = 0; i < _len; i++)
                 {
                     var row = data['materialmst'][i];
@@ -57,16 +58,21 @@ export class MasterSyncAPIService {
                     var uom = this.utilService.encode64(row.uom);
                     var status = this.utilService.encode64(row.status);
                     var temp = this.utilService.encode64(row.temp);
-                    this.databaseService.insertIntoTableQuery('materialmst',
-                    'pernr,matnr, maktx, packing, division, listprice, eancode, businessunit, proddivision, category, subcategory, principal, brand, segment, uom, status,temp',
-                    [pernr,matnr, maktx, packing, division, listprice, eancode, businessunit, proddivision, category, subcategory, principal, brand, segment, uom, status,temp],i)
-                    .then((resobj) => {
-                        // console.log(JSON.stringify(resobj));
-                    }, (err) => {
-                        console.log(JSON.stringify(err));
-                    });
-                    if(i == _len-1) this.insertMaterial(link, row['typeid'], resolve, reject);
+
+                    let tableName = 'materialmst';
+                    let columns = 'pernr,matnr, maktx, packing, division, listprice, eancode, businessunit, proddivision, category, subcategory, principal, brand, segment, uom, status,temp';
+                    let placeholders = this.databaseService._createPlaceHolder(columns);
+                    let params = [pernr,matnr, maktx, packing, division, listprice, eancode, businessunit, proddivision, category, subcategory, principal, brand, segment, uom, status,temp]
+                    batchArray.push(['INSERT OR REPLACE INTO '+tableName+' ('+columns+') VALUES( '+placeholders+')', params]);
+
                 }
+                this.databaseService.executeBatchRequest(batchArray).then((bResObj) => {
+                    this.insertMaterial(link, data['materialmst'][_len-1]['typeid'], resolve, reject);
+                    // obj.typeid = data['materialmst'][_len-1]['typeid'] ;resolve(obj)
+                }, (err) => {
+                    console.error('Unable to execute sql: ', err);
+                    // reject(false);
+                });
             }
 
         }, (err) => {
@@ -101,6 +107,7 @@ export class MasterSyncAPIService {
     InsertIntoPlArticleTable(data){
         let epernr = this.utilService.encode64(this.pernr);
         this.databaseService.deleteTableQuery('A907',' where pernr=?',[epernr]).then((resobj) => {},(err) => {});
+        let batchArray = [];
         for (var i = 0; i < data.length; i++)
         {
             var row = data[i];
@@ -113,19 +120,24 @@ export class MasterSyncAPIService {
             var kbetr = this.utilService.encode64((row.kbetr));
             var uom = this.utilService.encode64(row.uom.toUpperCase());
 
-            this.databaseService.insertIntoTableQuery('A907',
-            'pernr,kappl,kschl,matnr,datab,datbi,kbetr,uom',
-            [pernr,kappl,kschl,matnr,datab,datbi,kbetr,uom],i)
-            .then((resobj) => {
-                console.log(JSON.stringify(resobj));
-            }, (err) => {
-                console.log(JSON.stringify(err));
-            });
+            let tableName = 'A907';
+            let columns = 'pernr,kappl,kschl,matnr,datab,datbi,kbetr,uom';
+            let placeholders = this.databaseService._createPlaceHolder(columns);
+            let params = [pernr,kappl,kschl,matnr,datab,datbi,kbetr,uom]
+            batchArray.push(['INSERT OR REPLACE INTO '+tableName+' ('+columns+') VALUES( '+placeholders+')', params]);
+
         }
+        this.databaseService.executeBatchRequest(batchArray).then((bResObj) => {
+            // obj.typeid = data[_len-1]['typeid'] ;resolve(obj)
+        }, (err) => {
+            console.error('Unable to execute sql: ', err);
+            // reject(false);
+        });
     }
     InsertIntoPlKeyAcctsTable(data){
         let epernr = this.utilService.encode64(this.pernr);
         this.databaseService.deleteTableQuery('A907keyaccountsmst',' where pernr=?',[epernr]).then((resobj) => {},(err) => {});
+        let batchArray = [];
         for (var i = 0; i < data.length; i++)
         {
             var row = data[i];
@@ -140,19 +152,24 @@ export class MasterSyncAPIService {
             var keyaccountid = this.utilService.encode64(row.keyaccountid);
             var keyaccount = this.utilService.encode64((row.keyaccount));
 
-            this.databaseService.insertIntoTableQuery('A907keyaccountsmst',
-            'pernr,kappl,kschl,matnr,datab,datbi,kbetr,uom,keyaccountid,keyaccount',
-            [pernr,kappl,kschl,matnr,datab,datbi,kbetr,uom,keyaccountid,keyaccount],i)
-            .then((resobj) => {
-                console.log(JSON.stringify(resobj));
-            }, (err) => {
-                console.log(JSON.stringify(err));
-            });
+            let tableName = 'A907keyaccountsmst';
+            let columns = 'pernr,kappl,kschl,matnr,datab,datbi,kbetr,uom,keyaccountid,keyaccount';
+            let placeholders = this.databaseService._createPlaceHolder(columns);
+            let params = [pernr,kappl,kschl,matnr,datab,datbi,kbetr,uom,keyaccountid,keyaccount]
+            batchArray.push(['INSERT OR REPLACE INTO '+tableName+' ('+columns+') VALUES( '+placeholders+')', params]);
+
         }
+        this.databaseService.executeBatchRequest(batchArray).then((bResObj) => {
+            // obj.typeid = data[_len-1]['typeid'] ;resolve(obj)
+        }, (err) => {
+            console.error('Unable to execute sql: ', err);
+            // reject(false);
+        });
     }
     InsertIntoPlCustChainTable(data){
         let epernr = this.utilService.encode64(this.pernr);
         this.databaseService.deleteTableQuery('A907custchainmst',' where pernr=?',[epernr]).then((resobj) => {},(err) => {});
+        let batchArray = [];
         for (var i = 0; i < data.length; i++)
         {
             var row = data[i];
@@ -167,19 +184,24 @@ export class MasterSyncAPIService {
             var custchainid = this.utilService.encode64(row.custchainid);
             var custchain = this.utilService.encode64((row.custchain));
 
-            this.databaseService.insertIntoTableQuery('A907custchainmst',
-            'pernr,kappl,kschl,matnr,datab,datbi,kbetr,uom,custchainid,custchain',
-            [pernr,kappl,kschl,matnr,datab,datbi,kbetr,uom,custchainid,custchain],i)
-            .then((resobj) => {
-                console.log(JSON.stringify(resobj));
-            }, (err) => {
-                console.log(JSON.stringify(err));
-            });
+            let tableName = 'A907custchainmst';
+            let columns = 'pernr,kappl,kschl,matnr,datab,datbi,kbetr,uom,custchainid,custchain';
+            let placeholders = this.databaseService._createPlaceHolder(columns);
+            let params = [pernr,kappl,kschl,matnr,datab,datbi,kbetr,uom,custchainid,custchain]
+            batchArray.push(['INSERT OR REPLACE INTO '+tableName+' ('+columns+') VALUES( '+placeholders+')', params]);
+
         }
+        this.databaseService.executeBatchRequest(batchArray).then((bResObj) => {
+            // obj.typeid = data[_len-1]['typeid'] ;resolve(obj)
+        }, (err) => {
+            console.error('Unable to execute sql: ', err);
+            // reject(false);
+        });
     }
     InsertIntoPlBranchCustClassTable(data){
         let epernr = this.utilService.encode64(this.pernr);
         this.databaseService.deleteTableQuery('A907branchclassmst',' where pernr=?',[epernr]).then((resobj) => {},(err) => {});
+        let batchArray = [];
         for (var i = 0; i < data.length; i++)
         {
             var row = data[i];
@@ -196,19 +218,24 @@ export class MasterSyncAPIService {
             var custclassid = this.utilService.encode64(row.custclassid);
             var custclass = this.utilService.encode64((row.custclass));
 
-            this.databaseService.insertIntoTableQuery('A907branchclassmst',
-            'pernr,kappl,kschl,matnr,datab,datbi,kbetr,uom,branchid,branch,custclassid,custclass',
-            [pernr,kappl,kschl,matnr,datab,datbi,kbetr,uom,branchid,branch,custclassid,custclass],i)
-            .then((resobj) => {
-                console.log(JSON.stringify(resobj));
-            }, (err) => {
-                console.log(JSON.stringify(err));
-            });
+            let tableName = 'A907branchclassmst';
+            let columns = 'pernr,kappl,kschl,matnr,datab,datbi,kbetr,uom,branchid,branch,custclassid,custclass';
+            let placeholders = this.databaseService._createPlaceHolder(columns);
+            let params = [pernr,kappl,kschl,matnr,datab,datbi,kbetr,uom,branchid,branch,custclassid,custclass]
+            batchArray.push(['INSERT OR REPLACE INTO '+tableName+' ('+columns+') VALUES( '+placeholders+')', params]);
+
         }
+        this.databaseService.executeBatchRequest(batchArray).then((bResObj) => {
+            // obj.typeid = data[_len-1]['typeid'] ;resolve(obj)
+        }, (err) => {
+            console.error('Unable to execute sql: ', err);
+            // reject(false);
+        });
     }
     InsertIntoPlCustomerTable(data){
         let epernr = this.utilService.encode64(this.pernr);
         this.databaseService.deleteTableQuery('A907customermst',' where pernr=?',[epernr]).then((resobj) => {},(err) => {});
+        let batchArray = [];
         for (var i = 0; i < data.length; i++)
         {
             var row = data[i];
@@ -222,19 +249,24 @@ export class MasterSyncAPIService {
             var uom = this.utilService.encode64(row.uom.toUpperCase());
             var kunnr = this.utilService.encode64((row.kunnr));
 
-            this.databaseService.insertIntoTableQuery('A907customermst',
-            'pernr,kappl,kschl,matnr,datab,datbi,kbetr,uom,kunnr',
-            [pernr,kappl,kschl,matnr,datab,datbi,kbetr,uom,kunnr],i)
-            .then((resobj) => {
-                console.log(JSON.stringify(resobj));
-            }, (err) => {
-                console.log(JSON.stringify(err));
-            });
+            let tableName = 'A907customermst';
+            let columns = 'pernr,kappl,kschl,matnr,datab,datbi,kbetr,uom,kunnr';
+            let placeholders = this.databaseService._createPlaceHolder(columns);
+            let params = [pernr,kappl,kschl,matnr,datab,datbi,kbetr,uom,kunnr]
+            batchArray.push(['INSERT OR REPLACE INTO '+tableName+' ('+columns+') VALUES( '+placeholders+')', params]);
+
         }
+        this.databaseService.executeBatchRequest(batchArray).then((bResObj) => {
+            // obj.typeid = data[_len-1]['typeid'] ;resolve(obj)
+        }, (err) => {
+            console.error('Unable to execute sql: ', err);
+            // reject(false);
+        });
     }
     InsertIntoBranchMasterTable(data){
         let epernr = this.utilService.encode64(this.pernr);
         this.databaseService.deleteTableQuery('custbranchmst',' where pernr=?',[epernr]).then((resobj) => {},(err) => {});
+        let batchArray = [];
         for (var i = 0; i < data.length; i++)
         {
             var row = data[i];
@@ -242,19 +274,24 @@ export class MasterSyncAPIService {
             var branchid = this.utilService.encode64(row.branchid);
             var vkbur = this.utilService.encode64(row.vkbur);
 
-            this.databaseService.insertIntoTableQuery('custbranchmst',
-            'pernr,branchid, vkbur',
-            [pernr,branchid, vkbur],i)
-            .then((resobj) => {
-                console.log(JSON.stringify(resobj));
-            }, (err) => {
-                console.log(JSON.stringify(err));
-            });
+            let tableName = 'custbranchmst';
+            let columns = 'pernr,branchid, vkbur';
+            let placeholders = this.databaseService._createPlaceHolder(columns);
+            let params = [pernr,branchid, vkbur]
+            batchArray.push(['INSERT OR REPLACE INTO '+tableName+' ('+columns+') VALUES( '+placeholders+')', params]);
+
         }
+        this.databaseService.executeBatchRequest(batchArray).then((bResObj) => {
+            // obj.typeid = data[_len-1]['typeid'] ;resolve(obj)
+        }, (err) => {
+            console.error('Unable to execute sql: ', err);
+            // reject(false);
+        });
     }
     InsertIntoCustChainMasterTable(data){
         let epernr = this.utilService.encode64(this.pernr);
         this.databaseService.deleteTableQuery('custchainmst',' where pernr=?',[epernr]).then((resobj) => {},(err) => {});
+        let batchArray = [];
         for (var i = 0; i < data.length; i++)
         {
             var row = data[i];
@@ -262,19 +299,24 @@ export class MasterSyncAPIService {
             var custchainid = this.utilService.encode64(row.custchainid);
             var kvgr2 = this.utilService.encode64(row.kvgr2);
 
-            this.databaseService.insertIntoTableQuery('custchainmst',
-            'pernr,custchainid, kvgr2',
-            [pernr,custchainid, kvgr2],i)
-            .then((resobj) => {
-                console.log(JSON.stringify(resobj));
-            }, (err) => {
-                console.log(JSON.stringify(err));
-            });
+            let tableName = 'custchainmst';
+            let columns = 'pernr,custchainid, kvgr2';
+            let placeholders = this.databaseService._createPlaceHolder(columns);
+            let params = [pernr,custchainid, kvgr2]
+            batchArray.push(['INSERT OR REPLACE INTO '+tableName+' ('+columns+') VALUES( '+placeholders+')', params]);
+
         }
+        this.databaseService.executeBatchRequest(batchArray).then((bResObj) => {
+            // obj.typeid = data[_len-1]['typeid'] ;resolve(obj)
+        }, (err) => {
+            console.error('Unable to execute sql: ', err);
+            // reject(false);
+        });
     }
     InsertIntoCustClassMasterTable(data){
         let epernr = this.utilService.encode64(this.pernr);
         this.databaseService.deleteTableQuery('custclassmst',' where pernr=?',[epernr]).then((resobj) => {},(err) => {});
+        let batchArray = [];
         for (var i = 0; i < data.length; i++)
         {
             var row = data[i];
@@ -282,19 +324,24 @@ export class MasterSyncAPIService {
             var classid = this.utilService.encode64(row.classid);
             var kvgr1 = this.utilService.encode64(row.kvgr1);
 
-            this.databaseService.insertIntoTableQuery('custclassmst',
-            'pernr,classid, kvgr1',
-            [pernr,classid, kvgr1],i)
-            .then((resobj) => {
-                console.log(JSON.stringify(resobj));
-            }, (err) => {
-                console.log(JSON.stringify(err));
-            });
+            let tableName = 'custclassmst';
+            let columns = 'pernr,classid, kvgr1';
+            let placeholders = this.databaseService._createPlaceHolder(columns);
+            let params = [pernr,classid, kvgr1]
+            batchArray.push(['INSERT OR REPLACE INTO '+tableName+' ('+columns+') VALUES( '+placeholders+')', params]);
+
         }
+        this.databaseService.executeBatchRequest(batchArray).then((bResObj) => {
+            // obj.typeid = data[_len-1]['typeid'] ;resolve(obj)
+        }, (err) => {
+            console.error('Unable to execute sql: ', err);
+            // reject(false);
+        });
     }
     InsertIntoKeyAcctsMasterTable(data){
         let epernr = this.utilService.encode64(this.pernr);
         this.databaseService.deleteTableQuery('custkeyacctsmst',' where pernr=?',[epernr]).then((resobj) => {},(err) => {});
+        let batchArray = [];
         for (var i = 0; i < data.length; i++)
         {
             var row = data[i];
@@ -302,19 +349,24 @@ export class MasterSyncAPIService {
             var keyaccountid = this.utilService.encode64(row.keyaccountid);
             var kvgr4 = this.utilService.encode64(row.kvgr4);
 
-            this.databaseService.insertIntoTableQuery('custkeyacctsmst',
-            'pernr,keyaccountid, kvgr4',
-            [pernr,keyaccountid, kvgr4],i)
-            .then((resobj) => {
-                console.log(JSON.stringify(resobj));
-            }, (err) => {
-                console.log(JSON.stringify(err));
-            });
+            let tableName = 'custkeyacctsmst';
+            let columns = 'pernr,keyaccountid, kvgr4';
+            let placeholders = this.databaseService._createPlaceHolder(columns);
+            let params = [pernr,keyaccountid, kvgr4]
+            batchArray.push(['INSERT OR REPLACE INTO '+tableName+' ('+columns+') VALUES( '+placeholders+')', params]);
+
         }
+        this.databaseService.executeBatchRequest(batchArray).then((bResObj) => {
+            // obj.typeid = data[_len-1]['typeid'] ;resolve(obj)
+        }, (err) => {
+            console.error('Unable to execute sql: ', err);
+            // reject(false);
+        });
     }
     InsertIntoA305(data){
         let epernr = this.utilService.encode64(this.pernr);
         this.databaseService.deleteTableQuery('A305',' where pernr=?',[epernr]).then((resobj) => {},(err) => {});
+        let batchArray = [];
         for (var i = 0; i < data.length; i++)
         {
             var row = data[i];
@@ -328,15 +380,19 @@ export class MasterSyncAPIService {
             var uom = this.utilService.encode64(row.uom.toUpperCase());
             var kunnr = this.utilService.encode64((row.kunnr));
 
-            this.databaseService.insertIntoTableQuery('A305',
-            'pernr,kappl,kschl,matnr,datab,datbi,kbetr,uom,kunnr',
-            [pernr,kappl,kschl,matnr,datab,datbi,kbetr,uom,kunnr],i)
-            .then((resobj) => {
-                console.log(JSON.stringify(resobj));
-            }, (err) => {
-                console.log(JSON.stringify(err));
-            });
+            let tableName = 'A305';
+            let columns = 'pernr,kappl,kschl,matnr,datab,datbi,kbetr,uom,kunnr';
+            let placeholders = this.databaseService._createPlaceHolder(columns);
+            let params = [pernr,kappl,kschl,matnr,datab,datbi,kbetr,uom,kunnr]
+            batchArray.push(['INSERT OR REPLACE INTO '+tableName+' ('+columns+') VALUES( '+placeholders+')', params]);
+
         }
+        this.databaseService.executeBatchRequest(batchArray).then((bResObj) => {
+            // obj.typeid = data[_len-1]['typeid'] ;resolve(obj)
+        }, (err) => {
+            console.error('Unable to execute sql: ', err);
+            // reject(false);
+        });
     }
   	callPriorityMaster(){
         return new Promise((resolve, reject) => {
@@ -356,6 +412,7 @@ export class MasterSyncAPIService {
     InsertIntoPriorityMasterTable(data){
         // let epernr = this.utilService.encode64(this.pernr);
         this.databaseService.deleteTableQuery('pricelistpriomst','',[]).then((resobj) => {},(err) => {});
+        let batchArray = [];
         for (var i = 0; i < data.length; i++)
         {
             var row = data[i];
@@ -363,15 +420,19 @@ export class MasterSyncAPIService {
             var tablename = this.utilService.encode64(row.table);
             var priority = this.utilService.encode64(row.priority);
 
-            this.databaseService.insertIntoTableQuery('pricelistpriomst',
-            'tablename,priority',
-            [tablename,priority],i)
-            .then((resobj) => {
-                console.log(JSON.stringify(resobj));
-            }, (err) => {
-                console.log(JSON.stringify(err));
-            });
+            let tableName = 'pricelistpriomst';
+            let columns = 'tablename,priority';
+            let placeholders = this.databaseService._createPlaceHolder(columns);
+            let params = [tablename,priority]
+            batchArray.push(['INSERT OR REPLACE INTO '+tableName+' ('+columns+') VALUES( '+placeholders+')', params]);
+
         }
+        this.databaseService.executeBatchRequest(batchArray).then((bResObj) => {
+            // obj.typeid = data[_len-1]['typeid'] ;resolve(obj)
+        }, (err) => {
+            console.error('Unable to execute sql: ', err);
+            // reject(false);
+        });
     }
   	callPromoDetails(typeid1,typeid2,typeid3,typeid4){
         return new Promise((resolve, reject) => {
@@ -421,6 +482,7 @@ export class MasterSyncAPIService {
                 resolve(obj);
             }
             else{
+                let batchArray = [];
                 for (var i = 0; i < _len; i++)
                 {
                     var row = data[i];
@@ -437,16 +499,19 @@ export class MasterSyncAPIService {
                     var promoparameter = this.utilService.encode64(row.promoparameter);
                     var flag = this.utilService.encode64(row.flag.trim());
 
-                    this.databaseService.insertIntoTableQuery('promofamilymst',
-                    'typeid,description,startdate,enddate,orderedtype,promotype,ouom,puom,oparameter,promoparameter,pernr,flag',
-                    [typeid,description,startdate,enddate,orderedtype,promotype,ouom,puom,oparameter,promoparameter,pernr,flag],i)
-                    .then((resobj) => {
-                         console.log('promofamilymst '+JSON.stringify(resobj));
-                    }, (err) => {
-                        console.log(JSON.stringify(err));
-                    });
-                    if(i == _len-1) {obj.typeid = row['typeid'] ;resolve(obj)};
+                    let tableName = 'promofamilymst';
+                    let columns = 'typeid,description,startdate,enddate,orderedtype,promotype,ouom,puom,oparameter,promoparameter,pernr,flag';
+                    let placeholders = this.databaseService._createPlaceHolder(columns);
+                    let params = [typeid,description,startdate,enddate,orderedtype,promotype,ouom,puom,oparameter,promoparameter,pernr,flag]
+                    batchArray.push(['INSERT OR REPLACE INTO '+tableName+' ('+columns+') VALUES( '+placeholders+')', params]);
+
                 }
+                this.databaseService.executeBatchRequest(batchArray).then((bResObj) => {
+                    obj.typeid = data[_len-1]['typeid'] ;resolve(obj)
+                }, (err) => {
+                    console.error('Unable to execute sql: ', err);
+                    // reject(false);
+                });
             }
         });
     }
@@ -460,6 +525,7 @@ export class MasterSyncAPIService {
                 resolve(obj);
             }
             else{
+                let batchArray = [];
                 for (var i = 0; i < _len; i++)
                 {
                     var row = data[i];
@@ -473,16 +539,19 @@ export class MasterSyncAPIService {
                     var discount = this.utilService.encode64(row.discount);
                     var price = this.utilService.encode64(row.price);
 
-                    this.databaseService.insertIntoTableQuery('promomaterialmst',
-                    'typeid,promoid,matnr,type,pernr,qnty,uom,discount,price',
-                    [typeid,promoid,matnr,type,pernr,qnty,uom,discount,price],i)
-                    .then((resobj) => {
-                         console.log('promomaterialmst '+JSON.stringify(resobj));
-                    }, (err) => {
-                        console.log(JSON.stringify(err));
-                    });
-                    if(i == _len-1) {obj.typeid = row['typeid'] ;resolve(obj)};
+                    let tableName = 'promomaterialmst';
+                    let columns = 'typeid,promoid,matnr,type,pernr,qnty,uom,discount,price';
+                    let placeholders = this.databaseService._createPlaceHolder(columns);
+                    let params = [typeid,promoid,matnr,type,pernr,qnty,uom,discount,price]
+                    batchArray.push(['INSERT OR REPLACE INTO '+tableName+' ('+columns+') VALUES( '+placeholders+')', params]);
+
                 }
+                this.databaseService.executeBatchRequest(batchArray).then((bResObj) => {
+                    obj.typeid = data[_len-1]['typeid'] ;resolve(obj)
+                }, (err) => {
+                    console.error('Unable to execute sql: ', err);
+                    // reject(false);
+                });
             }
         });
     }
@@ -496,6 +565,7 @@ export class MasterSyncAPIService {
                 resolve(obj);
             }
             else{
+                let batchArray = [];
                 for (var i = 0; i < _len; i++)
                 {
                     var row = data[i];
@@ -509,16 +579,19 @@ export class MasterSyncAPIService {
                     var ouom = this.utilService.encode64(row.ouom);
                     var flag = this.utilService.encode64(row.flag.trim());
 
-                    this.databaseService.insertIntoTableQuery('promostructmst',
-                    'typeid,description,startdate,enddate,forcedflag,discount,ouom,pernr,flag',
-                    [typeid,description,startdate,enddate,forcedflag,discount,ouom,pernr,flag],i)
-                    .then((resobj) => {
-                         console.log('promostructmst '+JSON.stringify(resobj));
-                    }, (err) => {
-                        console.log(JSON.stringify(err));
-                    });
-                    if(i == _len-1) {obj.typeid = row['typeid'] ;resolve(obj)};
+                    let tableName = 'promostructmst';
+                    let columns = 'typeid,description,startdate,enddate,forcedflag,discount,ouom,pernr,flag';
+                    let placeholders = this.databaseService._createPlaceHolder(columns);
+                    let params = [typeid,description,startdate,enddate,forcedflag,discount,ouom,pernr,flag]
+                    batchArray.push(['INSERT OR REPLACE INTO '+tableName+' ('+columns+') VALUES( '+placeholders+')', params]);
+
                 }
+                this.databaseService.executeBatchRequest(batchArray).then((bResObj) => {
+                    obj.typeid = data[_len-1]['typeid'] ;resolve(obj)
+                }, (err) => {
+                    console.error('Unable to execute sql: ', err);
+                    // reject(false);
+                });
             }
         });
     }
@@ -532,6 +605,7 @@ export class MasterSyncAPIService {
                 resolve(obj);
             }
             else{
+                let batchArray = [];
                 for (var i = 0; i < _len; i++)
                 {
                     var row = data[i];
@@ -542,16 +616,19 @@ export class MasterSyncAPIService {
                     var discount = this.utilService.encode64((row.discount));
                     var type = this.utilService.encode64(row.type);
 
-                    this.databaseService.insertIntoTableQuery('promomaterialstructmst',
-                    'typeid,promoid,matnr,type,pernr,discount',
-                    [typeid,promoid,matnr,type,pernr,discount],i)
-                    .then((resobj) => {
-                         console.log('promomaterialstructmst '+JSON.stringify(resobj));
-                    }, (err) => {
-                        console.log(JSON.stringify(err));
-                    });
-                    if(i == _len-1) {obj.typeid = row['typeid'] ;resolve(obj)};
+                    let tableName = 'promomaterialstructmst';
+                    let columns = 'typeid,promoid,matnr,type,pernr,discount';
+                    let placeholders = this.databaseService._createPlaceHolder(columns);
+                    let params = [typeid,promoid,matnr,type,pernr,discount]
+                    batchArray.push(['INSERT OR REPLACE INTO '+tableName+' ('+columns+') VALUES( '+placeholders+')', params]);
+
                 }
+                this.databaseService.executeBatchRequest(batchArray).then((bResObj) => {
+                    obj.typeid = data[_len-1]['typeid'] ;resolve(obj)
+                }, (err) => {
+                    console.error('Unable to execute sql: ', err);
+                    // reject(false);
+                });
             }
         });
     }
@@ -566,6 +643,7 @@ export class MasterSyncAPIService {
                     resolve(obj);
                 }
                 else{
+                    let batchArray = [];
                     for (var i = 0; i < _len; i++)
                     {
                         var row = data[i];
@@ -575,16 +653,19 @@ export class MasterSyncAPIService {
                         var promovalue = this.utilService.encode64(row.promovalue);
                         var promotype = this.utilService.encode64(row.promotype);
 
-                        this.databaseService.insertIntoTableQuery('promoconfigmst',
-                        'typeid,value,promovalue,promotype,pernr',
-                        [typeid,value,promovalue,promotype,pernr],i)
-                        .then((resobj) => {
-                            console.log('promoconfigmst '+JSON.stringify(resobj));
-                        }, (err) => {
-                            console.log(JSON.stringify(err));
-                        });
-                        if(i == _len-1) {obj.isLast = true; resolve(obj);}
+                        let tableName = 'promoconfigmst';
+                        let columns = 'typeid,value,promovalue,promotype,pernr';
+                        let placeholders = this.databaseService._createPlaceHolder(columns);
+                        let params = [typeid,value,promovalue,promotype,pernr]
+                        batchArray.push(['INSERT OR REPLACE INTO '+tableName+' ('+columns+') VALUES( '+placeholders+')', params]);
+
                     }
+                    this.databaseService.executeBatchRequest(batchArray).then((bResObj) => {
+                        obj.isLast = true;resolve(obj)
+                    }, (err) => {
+                        console.error('Unable to execute sql: ', err);
+                        // reject(false);
+                    });
                 }
             }
             else{

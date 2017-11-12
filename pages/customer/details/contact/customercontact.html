@@ -6,21 +6,21 @@
 <ion-item-sliding *ngFor="let obj of group.object">
   <ion-item (click)="editContact(obj)">
     <ion-avatar item-left>
-      <img src="assets/img/logo.png">
+      <img [src]="obj.photo">
     </ion-avatar>
     <h2>{{obj.name}}</h2>
     <p>{{obj.designation}}</p>
   </ion-item>
   <ion-item-options side="right">
-      <button ion-button color="danger" (click)="deleteContact(obj.email)">
+      <button ion-button color="danger" (click)="deleteContact(obj)">
         <ion-icon name="trash"></ion-icon>
         Delete
       </button>
-      <button ion-button color="primary" (click)="emailContact(obj.email)">
+      <button ion-button color="primary" (click)="emailContact(obj.emailid)">
         <ion-icon name="mail"></ion-icon>
         Email
       </button>
-      <button ion-button color="secondary" (click)="callContact(obj.mobile)">
+      <button ion-button color="secondary" (click)="callContact(obj.mobileno)">
         <ion-icon name="call"></ion-icon>
         Call
       </button>

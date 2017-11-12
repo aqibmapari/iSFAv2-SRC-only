@@ -31,7 +31,7 @@ constructor(public nav: NavController,
       public apiRequestService: APIRequestService,
       public afterLoginAPIService: AfterLoginAPIService) {
           this.login.username = '39918';
-          this.login.password = 'mian';
+          this.login.password = '12345';
 }
 ngOnInit() {
       this.apiRequestService.presentLoader('Please Wait...');
