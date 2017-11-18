@@ -32,7 +32,7 @@ npm install --save @ionic-native/device
 ionic cordova plugin add cordova-sqlite-storage
 npm install --save @ionic-native/sqlite
 
-ionic cordova plugin add cordova-plugin-googlemaps --variable API_KEY_FOR_ANDROID="ANDROID_API_KEY" --variable API_KEY_FOR_IOS="iOS_API_KEY"
+ionic cordova plugin add cordova-plugin-googlemaps --variable API_KEY_FOR_ANDROID="AIzaSyBg5R1F5cc0cwMSLq09aHpRRROU3dJbnqw" --variable API_KEY_FOR_IOS="AIzaSyCs8KStNo5UilKe3YOCOgZKrQQhJGv5Qw4"
 npm install --save @ionic-native/google-maps
 
 ionic cordova plugin add cordova-plugin-geolocation --variable GEOLOCATION_USAGE_DESCRIPTION="To locate you"
