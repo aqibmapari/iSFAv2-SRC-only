@@ -14,7 +14,8 @@
 
 <ion-content>
   <ion-list>
-    <ion-item-divider sticky no-paading>Invoice Number: {{invdetails.no}}</ion-item-divider>
+    <sticky-divider [displayText]="'Invoice Number: '+invdetails.no"></sticky-divider>
+    <!-- <ion-item-divider sticky no-paading>Invoice Number: {{invdetails.no}}</ion-item-divider> -->
     <ion-item no-padding *ngFor="let detailsobj of invdetails.details">
       <ion-row>
         <ion-col col-12><h4>{{detailsobj.maktx}}</h4></ion-col>
@@ -22,7 +23,7 @@
       <ion-row>
         <ion-col col-4><h4>{{detailsobj.matnr}}</h4></ion-col>
         <ion-col col-4><h4>{{detailsobj.invqty}}</h4></ion-col>
-        <ion-col col-4><h4>{{detailsobj.invvalue}}</h4></ion-col>
+        <ion-col col-4><h4>{{detailsobj.invvalue | commaFormat}}</h4></ion-col>
       </ion-row>
     </ion-item>
   </ion-list>

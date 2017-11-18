@@ -28,6 +28,9 @@
 .bar-button-default-md, .bar-button-default-ios {
     color: #fff;
 }
+ion-fab{
+    position: fixed;
+}
 ion-segment {
     display: block;
     white-space: nowrap;

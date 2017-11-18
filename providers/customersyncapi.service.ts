@@ -98,8 +98,8 @@ export class CustomerSyncAPIService {
             this.pernr = this.sharedService.getPernr();
             let className = this.sharedService.getAPIObj('credit');
             // let pernr = this.utilService.encode64(this.pernr);
-            // let link = this.ip+className;
-            let link = "http://mobinfoprd.binzagr.com.sa:8081/bsalesfs"+className;
+            let link = this.ip+className;
+            // let link = "http://mobinfoprd.binzagr.com.sa:8081/bsalesfs"+className;
             var obj1 = {typeid:0,isLast:false};
             var obj2 = {typeid:0,isLast:false};
             this.callCustCreditAPI(link,obj1,obj2, resolve, reject);
@@ -211,6 +211,7 @@ export class CustomerSyncAPIService {
             let className = this.sharedService.getAPIObj('sodetails');
             // let pernr = this.utilService.encode64(this.pernr);
             let link = this.ip+className;
+            link = "http://mobinfoprd.binzagr.com.sa:8081/bsalesfs"+className;
             var obj1 = {typeid:0,isLast:false};
             var obj2 = {typeid:0,isLast:false};
             this.callCustSOInvDetailsAPI(link,obj1,obj2, resolve, reject);

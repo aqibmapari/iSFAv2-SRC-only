@@ -31,6 +31,7 @@ export class MyApp {
 		console.log(this.platform)
 		this.initializeApp();
 		sharedService.setIP('http://212.118.101.172:8081/bsales5jan');
+		// sharedService.setIP('http://portal.intellectbizware.com/intellectsales');
 		sharedService.setIsApp(platform.is('core') || platform.is('mobileweb')? false: true);
 		sharedService.setAPIObj([{key: 'user', className: '/getUserJsonAction.do'},
 			{key: 'authenticate', className: '/ValidateLoginAction.do'},
