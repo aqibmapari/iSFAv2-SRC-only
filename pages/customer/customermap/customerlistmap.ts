@@ -43,9 +43,12 @@ export class CustomerListMapPage implements AfterViewInit{
 			this.loadMap();
 			this.getCurrentLocation();
 			this.requestLocationServices().then((param: boolean) => {
+				console.log('location Request resolved')
 				if(param){
 					this.getCustomerLocation();
 				}
+			},(err) => {
+				console.log(err);
 			});
 		}
 		requestLocationServices(){
@@ -103,26 +106,23 @@ export class CustomerListMapPage implements AfterViewInit{
 			 });
 		}
 		loadMap() {
-			console.log('map loading started')
-
-			console.log('options set')
 			this.map = this.googleMaps.create(this.mapElement.nativeElement);
 			console.log('map created')
 			// Wait the MAP_READY before using any methods.
-			this.map.one(GoogleMapsEvent.MAP_READY)
-				.then(() => {
-					console.log('Map is ready!');
+			// this.map.one(GoogleMapsEvent.MAP_READY)
+			// 	.then(() => {
+			// 		console.log('Map is ready!');
 
-					// Now you can use all methods safely.
-					// let obj = {
-					// 	title:'You are Here',
-					// 	icon: 'green',
-					// 	lat:resp.coords.latitude,
-					// 	long:resp.coords.longitude,
-					// 	animation: 'DROP'
-					// }
-					// this.addMarker(obj)
-				});
+			// 		// Now you can use all methods safely.
+			// 		// let obj = {
+			// 		// 	title:'You are Here',
+			// 		// 	icon: 'green',
+			// 		// 	lat:resp.coords.latitude,
+			// 		// 	long:resp.coords.longitude,
+			// 		// 	animation: 'DROP'
+			// 		// }
+			// 		// this.addMarker(obj)
+			// 	});
 		}
 		getCustomerLocation(){
 			this.items = [];

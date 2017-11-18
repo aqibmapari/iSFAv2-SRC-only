@@ -1,3 +1,17 @@
-page-page3 {
-
+customer-credit {
+  ion-list .label-md{
+    margin: 0;
+  }
+  ion-select{
+    max-width: 100%;
+  }
+  .select-md {
+    padding: 7px 0 7px 2px;
+  }
+  .datetime-md{
+    padding: 7px 0 7px 2px;
+  }
+  .text-input-md{
+    margin: 7px 0;
+  }
 }

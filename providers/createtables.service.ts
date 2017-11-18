@@ -177,7 +177,7 @@ export class CreateAllTablesService {
     createCustomerCreditTable(){
         return this._generateCreateTableQuery('custcreditmst',
 		'kunnr text, invno text,invdate text,invamount text,amountrec text,date text,balance text,duedate text,instrumentno text,'+
-        'invdatetime text,pernr text');
+        'invdatetime int,pernr text');
     }
     createCustomerCreditLimitTable(){
         return this._generateCreateTableQuery('custcreditlimitmst',

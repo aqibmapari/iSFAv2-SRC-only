@@ -8,7 +8,8 @@ export class CommaFormatPipe implements PipeTransform {
   }
   _addCommas(nStr)
   {
-      var flag = 0;
+    if(isNaN(parseFloat(nStr))) return 0.00;
+    var flag = 0;
       nStr += '';
       if(nStr.indexOf('-')!= -1){
           flag++;

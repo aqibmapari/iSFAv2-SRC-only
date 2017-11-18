@@ -1,15 +1,15 @@
 <ion-header>
-	<ion-card>
+	<div ion-text text-center>
 		<img src="./assets/img/logo.png"/>
-	</ion-card>
+	</div>
 </ion-header>
 <ion-content>
 	<ion-grid>
 		<ion-row *ngFor="let doubles of getDoubles()">
 			<ion-col *ngFor="let item of doubles" (click)="openPage(item)">
 				<ion-item style="text-align:center !important;">
-					<ion-icon [name]='item.iconName' color="primary" style="font-size:24px;"></ion-icon><br>
-					<label>{{item.title}}</label>
+					<ion-icon [name]='item.iconName' color="golden" style="font-size:24px;"></ion-icon><br>
+					<label style="color:#fff;">{{item.title}}</label>
 				</ion-item>
 			</ion-col>
 		</ion-row>

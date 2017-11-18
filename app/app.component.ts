@@ -30,7 +30,6 @@ export class MyApp {
 	) {
 		console.log(this.platform)
 		this.initializeApp();
-		// sharedService.setIP('http://212.118.101.174:8081/bsalesfs');
 		sharedService.setIP('http://212.118.101.172:8081/bsales5jan');
 		sharedService.setIsApp(platform.is('core') || platform.is('mobileweb')? false: true);
 		sharedService.setAPIObj([{key: 'user', className: '/getUserJsonAction.do'},

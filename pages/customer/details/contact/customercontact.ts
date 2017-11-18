@@ -91,10 +91,10 @@ export class CustomerContact {
 		deleteContact(obj){
 
 		}
-		emailContact(obj){
-
+		emailContact(emailid){
+			document.location.href = ('mailto:'+emailid);
 		}
-		callContact(obj){
-
+		callContact(number){
+			document.location.href = ('tel:'+number);
 		}
 }

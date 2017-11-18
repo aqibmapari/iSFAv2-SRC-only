@@ -1,8 +1,8 @@
-<ion-header>
+<!-- <ion-header>
 	<ion-navbar>
 		<ion-title>Login</ion-title>
 	</ion-navbar>
-</ion-header>
+</ion-header> -->
 
 <ion-content padding>
 	<!-- <ion-list>
@@ -20,10 +20,11 @@
 	</ion-list>
 
 	<button ion-button block (click)="login()">Sign In</button> -->
-
+	<div ion-text text-center class="formCenter">
+	<div ion-text text-center><img src="./assets/img/logo.png"/></div>
 	<form #loginForm="ngForm" novalidate>
 		<ion-item>
-			<ion-label floating color="primary">UserId</ion-label>
+			<ion-label floating color="golden">UserId</ion-label>
 			<ion-input [(ngModel)]="login.username" name="username" type="text" #username="ngModel" spellcheck="false" autocapitalize="off" required></ion-input>
 		</ion-item>
 		<p [hidden]="username.valid || submitted == false" color="danger" padding-left>
@@ -31,19 +32,19 @@
 		</p>
 
 		<ion-item>
-			<ion-label floating color="primary">Password</ion-label>
+			<ion-label floating color="golden">Password</ion-label>
 			<ion-input [(ngModel)]="login.password" name="password" type="password" #password="ngModel" required></ion-input>
 		</ion-item>
 		<p [hidden]="password.valid || submitted == false" color="danger" padding-left>
 		Password is required
 		</p>
 
-		<ion-row responsive-sm>
-			<ion-col>
-				<button ion-button (click)="onLogin(loginForm)" type="submit" color="primary" block>Login</button>
-			</ion-col>
-		</ion-row>
+		<!-- <ion-row responsive-sm>
+			<ion-col> -->
+				<button margin-top ion-button full (click)="onLogin(loginForm)" type="submit" color="golden">Login</button>
+			<!-- </ion-col>
+		</ion-row> -->
 	</form>
-
+</div>
 
 </ion-content>

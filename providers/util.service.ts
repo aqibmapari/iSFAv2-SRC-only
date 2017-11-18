@@ -172,6 +172,15 @@ export class UtilService {
     	var returnDateTime = isTimeZoneIndependent?(d.getTime()-(d.getTimezoneOffset()*60000)):d.getTime();
     	return returnDateTime;
     }
+    DT2digit(n) {
+        return n < 10 ? '0' + n : n;
+    }
+    returnDateString(date){
+        var day = this.DT2digit(date.getDate());
+        var month = this.DT2digit(date.getMonth() + 1);
+        var year = this.DT2digit(date.getFullYear());
+        return year + "-" + month + "-" + day;
+    }
     getPercentage(ach, tar){
         if(tar === 0 || isNaN(tar) || isNaN(ach)) return 0;
         else return (ach/tar*100);

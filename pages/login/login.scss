@@ -1,3 +1,11 @@
 page-login {
+  ion-content {
+    background-image: url("../assets/img/bg.jpg") !important;
+  }
 
+  .item-md, .item-ios{
+    background-color: transparent;
+    padding-left: 0;
+    color: #fff;
+  }
 }

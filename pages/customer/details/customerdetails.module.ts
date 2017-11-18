@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { TabsComponentModule } from "../../../components/tabs/tabs.module";
-
+import { CommaFormatPipeModule } from "../../../pipes/comma-format/comma-format.module";
 import { CustomerDetailsPage } from './customerdetails';
 import { CustomerInfo } from './info/customerinfo';
 import {CustomerAttributes} from './attributes/customerattributes';
@@ -28,6 +28,7 @@ import {CustomerReports} from './reports/customerreports';
     ],
     imports: [
         TabsComponentModule,
+        CommaFormatPipeModule,
         IonicPageModule.forChild(CustomerDetailsPage)
     ]
 })

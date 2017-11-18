@@ -8,7 +8,7 @@
       <ion-col col-6>
         <h2>Credit Limit</h2></ion-col>
       <ion-col col-4>
-        <h3>{{creditModel.creditlimit}}</h3></ion-col>
+        <h3>{{creditModel.creditlimit | commaFormat}}</h3></ion-col>
       <ion-col col-2></ion-col>
     </ion-row>
   </ion-item>
@@ -17,7 +17,7 @@
       <ion-col col-6>
         <h2>Limit Used</h2></ion-col>
       <ion-col col-4>
-        <h3>{{creditModel.limitused}}</h3></ion-col>
+        <h3>{{creditModel.limitused | commaFormat}}</h3></ion-col>
       <ion-col col-2></ion-col>
     </ion-row>
   </ion-item>
@@ -26,7 +26,7 @@
       <ion-col col-6>
         <h2>Receivable</h2></ion-col>
       <ion-col col-4>
-        <h3>{{creditModel.receivable}}</h3></ion-col>
+        <h3>{{creditModel.receivable | commaFormat}}</h3></ion-col>
       <ion-col col-2></ion-col>
     </ion-row>
   </ion-item>
@@ -35,7 +35,7 @@
       <ion-col col-6>
         <h2>Available Credit</h2></ion-col>
       <ion-col col-4>
-        <h3>{{creditModel.avlblcredit}}</h3></ion-col>
+        <h3>{{creditModel.avlblcredit | commaFormat}}</h3></ion-col>
       <ion-col col-2></ion-col>
     </ion-row>
   </ion-item>
@@ -44,7 +44,7 @@
       <ion-col col-6>
         <h2>Total Overdue</h2></ion-col>
       <ion-col col-4>
-        <h3 ion-text color="danger">{{creditModel.totoverdue}}</h3></ion-col>
+        <h3 ion-text color="danger">{{creditModel.totoverdue | commaFormat}}</h3></ion-col>
       <ion-col col-2><ion-icon name="square" color="danger"></ion-icon></ion-col>
     </ion-row>
   </ion-item>
@@ -86,19 +86,19 @@
       <tr *ngFor="let invoice of creditModel.invoices">
         <td style="border-bottom: 1px solid #000000;" height="20" align="center" valign="middle" ion-text color="{{invoice.color}}" (click)="showInvDetails(invoice)">{{invoice.no}}</td>
         <!-- <td style="border-bottom: 1px solid #000000;" height="20" align="center" valign="middle">01.06.2017</td> -->
-        <td style="border-bottom: 1px solid #000000;" height="20" align="center" valign="middle" ion-text color="{{invoice.color}}">{{invoice.amt}}</td>
-        <td style="border-bottom: 1px solid #000000;" height="20" align="center" valign="middle" ion-text color="{{invoice.color}}">{{invoice.date}}</td>
+        <td style="border-bottom: 1px solid #000000;" height="20" align="center" valign="middle" ion-text color="{{invoice.color}}">{{invoice.amt | commaFormat}}</td>
+        <td style="border-bottom: 1px solid #000000;" height="20" align="center" valign="middle" ion-text color="{{invoice.color}}">{{invoice.duedate | date:'dd.MM.yyyy'}}</td>
         <td style="border-bottom: 1px solid #000000;" height="20" align="center" valign="middle" ion-text color="{{invoice.color}}"><ion-input type="number" placeholder="Amt" [(ngModel)]="invoice.torcv"></ion-input></td>
-        <td style="border-bottom: 1px solid #000000;" height="20" align="center" valign="middle" ion-text color="{{invoice.color}}">{{invoice.balance}}</td>
+        <td style="border-bottom: 1px solid #000000;" height="20" align="center" valign="middle" ion-text color="{{invoice.color}}">{{invoice.balance | commaFormat}}</td>
         <td style="border-bottom: 1px solid #000000;" height="20" align="center" valign="middle"><ion-checkbox color="{{invoice.color}}" checked="false"></ion-checkbox></td>
       </tr>
       <tr>
         <td style="border-bottom: 1px solid #000000;" height="20" align="center" valign="middle" ion-text color="{{creditModel.invoiceTotal.color}}">{{creditModel.invoiceTotal.no}}</td>
         <!-- <td style="border-bottom: 1px solid #000000;" height="20" align="center" valign="middle">01.06.2017</td> -->
-        <td style="border-bottom: 1px solid #000000;" height="20" align="center" valign="middle" ion-text bold color="{{creditModel.invoiceTotal.color}}"><b>{{creditModel.invoiceTotal.amt}}</b></td>
+        <td style="border-bottom: 1px solid #000000;" height="20" align="center" valign="middle" ion-text bold color="{{creditModel.invoiceTotal.color}}"><b>{{creditModel.invoiceTotal.amt | commaFormat}}</b></td>
         <td style="border-bottom: 1px solid #000000;" height="20" align="center" valign="middle" ion-text color="{{creditModel.invoiceTotal.color}}">{{creditModel.invoiceTotal.date}}</td>
-        <td style="border-bottom: 1px solid #000000;" height="20" align="center" valign="middle" ion-text color="{{creditModel.invoiceTotal.color}}"><b>{{creditModel.invoiceTotal.torcv}}</b></td>
-        <td style="border-bottom: 1px solid #000000;" height="20" align="center" valign="middle" ion-text color="{{creditModel.invoiceTotal.color}}"><b>{{creditModel.invoiceTotal.balance}}</b></td>
+        <td style="border-bottom: 1px solid #000000;" height="20" align="center" valign="middle" ion-text color="{{creditModel.invoiceTotal.color}}"><b>{{creditModel.invoiceTotal.torcv | commaFormat}}</b></td>
+        <td style="border-bottom: 1px solid #000000;" height="20" align="center" valign="middle" ion-text color="{{creditModel.invoiceTotal.color}}"><b>{{creditModel.invoiceTotal.balance | commaFormat}}</b></td>
         <td style="border-bottom: 1px solid #000000;" height="20" align="center" valign="middle">&nbsp;</td>
       </tr>
     </tbody>
