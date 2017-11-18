@@ -1,7 +1,5 @@
 <ion-list>
-    <ion-item-divider sticky>
-    {{selectedArticle.maktx}}
-    </ion-item-divider>
+    <sticky-divider [displayText]="selectedArticle.maktx"></sticky-divider>
     <ion-item>
         <h2>Article Number</h2>
         <p>{{selectedArticle.matnr}}</p>

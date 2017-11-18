@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { TabsComponentModule } from "../../../components/tabs/tabs.module";
+import { StickyDividerComponentModule } from "../../../components/stickydivider/stickydivider.module";
 import { CommaFormatPipeModule } from "../../../pipes/comma-format/comma-format.module";
 import { CustomerDetailsPage } from './customerdetails';
 import { CustomerInfo } from './info/customerinfo';
@@ -29,6 +30,7 @@ import {CustomerReports} from './reports/customerreports';
     imports: [
         TabsComponentModule,
         CommaFormatPipeModule,
+        StickyDividerComponentModule,
         IonicPageModule.forChild(CustomerDetailsPage)
     ]
 })

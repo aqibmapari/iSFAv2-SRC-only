@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 
 import { TabsComponentModule } from "../../../components/tabs/tabs.module";
+import { StickyDividerComponentModule } from "../../../components/stickydivider/stickydivider.module";
 // import {SharedModule} from '../../../app/shared.module';
 import { ArticleDetailsPage } from './articledetails';
 import { ArticleInfo } from './info/articleinfo';
@@ -25,6 +26,7 @@ import {ArticleBenefits} from './benefits/articlebenefits';
   ],
   imports: [
 		TabsComponentModule,
+		StickyDividerComponentModule,
     IonicPageModule.forChild(ArticleDetailsPage)
   ]
 })

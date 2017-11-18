@@ -1,8 +1,8 @@
 
 	<ion-item-group *ngFor="let group of groupedObjects">
 
-		<ion-item-divider light>{{group.letter}}</ion-item-divider>
-		<ion-item *ngFor="let obj of group.object" (click)="goToDetails(obj)">{{obj.name1}}
+		<sticky-divider [displayText]="group.letter"></sticky-divider>
+    <ion-item *ngFor="let obj of group.object" (click)="goToDetails(obj)">{{obj.name1}}
 			<ion-note item-right>
 			{{obj.kunnr}}
 			</ion-note>

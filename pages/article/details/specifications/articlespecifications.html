@@ -1,7 +1,5 @@
 <ion-list>
-    <ion-item-divider sticky>
-    {{selectedArticle.maktx}}
-    </ion-item-divider>
+    <sticky-divider [displayText]="selectedArticle.maktx"></sticky-divider>
     <ion-item>
         <h2>Properties</h2>
         <p ion-text text-wrap>{{selectedArticle.properties}}</p>

@@ -1,17 +1,9 @@
 customer-activity {
-  .item-ios.item-block .item-inner {
+  .item-ios.item-block .item-inner, .item-md.item-block .item-inner  {
     padding-right: 1px;
   }
 
-  .item-md.item-block .item-inner {
-    padding-right: 1px;
-  }
-
-  .label-ios {
-    margin: 0;
-  }
-
-  .label-md {
+  ion-item .label-ios, ion-item .label-md {
     margin: 0;
   }
 }

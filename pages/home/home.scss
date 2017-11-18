@@ -1,6 +1,8 @@
 page-home {
   ion-content {
     background-image: url("../assets/img/bg.jpg") !important;
+    background-repeat: no-repeat;
+    background-size: cover;
   }
 
   .item-md, .item-ios{

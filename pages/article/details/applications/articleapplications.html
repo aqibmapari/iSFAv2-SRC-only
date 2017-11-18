@@ -1,7 +1,5 @@
 <ion-list>
-    <ion-item-divider sticky>
-    {{selectedArticle.maktx}}
-    </ion-item-divider>
+    <sticky-divider [displayText]="selectedArticle.maktx"></sticky-divider>
     <ion-item *ngFor="let application of selectedArticle.applications">
         <p ion-text text-wrap>{{application.text}}</p>
     </ion-item>

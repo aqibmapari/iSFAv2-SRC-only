@@ -1,7 +1,5 @@
 <ion-list>
-    <ion-item-divider sticky>
-    {{selectedCustomer.name1}}
-    </ion-item-divider>
+    <sticky-divider [displayText]="selectedCustomer.name1"></sticky-divider>
     <ion-item>
         <h2>Customer Number</h2>
         <p>{{selectedCustomer.kunnr}}</p>

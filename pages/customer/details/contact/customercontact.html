@@ -1,8 +1,7 @@
-<ion-item-divider no-margin sticky>
-{{selectedCustomer.name1}}
-</ion-item-divider>
+<sticky-divider [displayText]="selectedCustomer.name1"></sticky-divider>
 <ion-list no-margin *ngFor="let group of groupedObjects">
-  <ion-item-divider light>{{group.letter}}</ion-item-divider>
+  <sticky-divider [displayText]="group.letter"></sticky-divider>
+
 <ion-item-sliding *ngFor="let obj of group.object">
   <ion-item (click)="editContact(obj)">
     <ion-avatar item-left>
@@ -29,7 +28,7 @@
 </ion-list>
 
 <ion-fab right bottom>
-    <button ion-fab color="primary"><ion-icon name="add"></ion-icon></button>
+    <button ion-fab color="golden"><ion-icon name="add"></ion-icon></button>
     <ion-fab-list side="top">
       <button (click)="pickContact()" ion-fab><ion-icon name="book"></ion-icon></button>
       <button (click)="addContact()" ion-fab><ion-icon name="create"></ion-icon></button>
